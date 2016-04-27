@@ -23,7 +23,6 @@ import javax.swing.SwingUtilities;
  *
  */
 public class BabyNamePicker {
-<<<<<<< HEAD
 
 	private JFrame frame;
 	private JPanel leftPanel;
@@ -267,11 +266,6 @@ public class BabyNamePicker {
     	});
     }
 	
-=======
-	
-	public static void main(String[] args) {
-		FileReader fr = new FileReader("names/", 1888);
-		
-	}
->>>>>>> 1cd5755dd590d5442d87196f7f230abaf17ff94a
+
+
 }

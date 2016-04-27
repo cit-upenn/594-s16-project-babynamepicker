@@ -75,6 +75,7 @@ public class BabyName {
 	 * @param n
 	 */
 	public void setPopTotal(int n) {
+		System.out.println(popularity.size());
 		for(int i = 2014; i > 2014 - n; i--) {
 			popTotal += popularity.get(i);
 		}

@@ -44,6 +44,9 @@ public class BabyNamePicker {
 	private ButtonGroup popularityGroup;
 	private JTextArea startsWithText;
 	private JComboBox<String> startWithMenu;
+	private JTextArea popularWithinText;
+	private JComboBox<String> popularWithinMenu;
+	private String[] popularYears;
 	private String[] letters;
 	private JTextArea numSuggestionsText;
 	private JComboBox<String> numSuggestionsMenu;
@@ -70,7 +73,8 @@ public class BabyNamePicker {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-//		FileReader fr = new FileReader("names/", 1888);
+		FileReader fr = new FileReader("names/", 1888);
+		fr.parseData();
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
             	BabyNamePicker b = new BabyNamePicker();
@@ -78,9 +82,6 @@ public class BabyNamePicker {
                 b.display();
             }
         });
-//		BabyNamePicker b = new BabyNamePicker();
-//		b.init();
-//		b.display();
 	}
 	
 	/**
@@ -115,6 +116,7 @@ public class BabyNamePicker {
 		genderText = new JTextArea("Gender of the Baby: ");
 		popularText = new JTextArea("Sort by Commonality: ");
 		startsWithText = new JTextArea("Starts with letter: ");
+		popularWithinText = new JTextArea("Popular Within the Last _ Years:");
 		numSuggestionsText = new JTextArea("Number of Suggestions: ");
 		
 		maleButton = new JRadioButton("Male");
@@ -131,6 +133,8 @@ public class BabyNamePicker {
 		popularityGroup.add(mostPopularButton);
 		letters = new String[] {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 		startWithMenu = new JComboBox<String>(letters);
+		popularYears = new String[] {"10", "20", "30", "40", "50", "All Time"};
+		popularWithinMenu = new JComboBox<String>(popularYears);
 		readyToRankButton = new JButton("I'm ready to rank!");
 		numSuggestions = new String[] {"10", "20", "30","40", "50"};
 		numSuggestionsMenu = new JComboBox<String>(numSuggestions);
@@ -183,6 +187,12 @@ public class BabyNamePicker {
 		i++;
 		c.gridy = i;
 		leftPanel.add(startWithMenu, c);
+		i++;
+		c.gridy = i;
+		leftPanel.add(popularWithinText, c);
+		i++;
+		c.gridy = i;
+		leftPanel.add(popularWithinMenu, c);
 		i++;
 		c.gridy = i;
 		leftPanel.add(numSuggestionsText, c);
@@ -258,6 +268,17 @@ public class BabyNamePicker {
     	});
     	//Selection in Starts With Menu tells the Model to list names starting with selected letter.
     	startWithMenu.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JComboBox c = (JComboBox) e.getSource();
+				String selectedItem = (String) c.getSelectedItem();
+				
+			}
+    		
+    	});
+    	//Selection in Popular Within Menu tells the Model to list names that were popular within last "selected" years.
+    	popularWithinMenu.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub

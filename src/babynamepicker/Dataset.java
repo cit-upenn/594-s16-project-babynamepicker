@@ -55,7 +55,12 @@ public class Dataset {
 	 */
 	public void finalList() {
 		for(String i : dataMap.keySet()) {
+//			dataMap.get(i).setPopTotal(50);
 			dataList.add(dataMap.get(i));
 		}
+		for(BabyName i : dataList) {
+			System.out.println(i.getName() + " " + i.getSex() + i.getPopTotal());
+		}
+		System.out.println(dataList.size());
 	}
 }

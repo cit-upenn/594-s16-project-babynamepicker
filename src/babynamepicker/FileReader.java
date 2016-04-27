@@ -56,8 +56,9 @@ public class FileReader {
 					}
 			        
 			    }
-			    in.close(); //***
 			});
+			in.close();
+			data.finalList();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

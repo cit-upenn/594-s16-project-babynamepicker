@@ -12,6 +12,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
@@ -30,6 +31,7 @@ public class BabyNamePicker {
 	private JTextArea genderText;
 	private JRadioButton maleButton;
 	private JRadioButton femaleButton; //if neither chosen, both male and female names listed
+	private JRadioButton unisexButton;
 	private ButtonGroup maleOrFemaleGroup;
 	private JTextArea popularText;
 	private JRadioButton leastPopularButton;
@@ -37,13 +39,12 @@ public class BabyNamePicker {
 	private ButtonGroup popularityGroup;
 	private JTextArea startsWithText;
 	private JComboBox<String> startWithMenu;
-	private JTextArea endsWithText;
-	private JComboBox<String> endsWithMenu;
 	private String[] letters;
 	private JTextArea numSuggestionsText;
 	private JComboBox<String> numSuggestionsMenu;
 	private String[] numSuggestions;
 	private JButton readyToRankButton;
+	private JList namesList;
 	
 	/** The Model is the object that does all the computations. It is
      * completely independent of the Controller and View objects. */
@@ -104,14 +105,15 @@ public class BabyNamePicker {
 		genderText = new JTextArea("Gender of the Baby: ");
 		popularText = new JTextArea("Sort by Commonality: ");
 		startsWithText = new JTextArea("Starts with letter: ");
-		endsWithText = new JTextArea("Ends with letter: ");
 		numSuggestionsText = new JTextArea("Number of Suggestions: ");
 		
 		maleButton = new JRadioButton("Male");
 		femaleButton = new JRadioButton("Female");
+		unisexButton = new JRadioButton("Both");
 		maleOrFemaleGroup = new ButtonGroup();
 		maleOrFemaleGroup.add(maleButton);
 		maleOrFemaleGroup.add(femaleButton);
+		maleOrFemaleGroup.add(unisexButton);
 		leastPopularButton = new JRadioButton("Least to Most");
 		mostPopularButton = new JRadioButton("Most to Least");
 		popularityGroup = new ButtonGroup();
@@ -119,10 +121,11 @@ public class BabyNamePicker {
 		popularityGroup.add(mostPopularButton);
 		letters = new String[] {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 		startWithMenu = new JComboBox<String>(letters);
-		endsWithMenu = new JComboBox<String>(letters);
 		readyToRankButton = new JButton("I'm ready to rank!");
 		numSuggestions = new String[] {"10", "20", "30","40", "50"};
 		numSuggestionsMenu = new JComboBox<String>(numSuggestions);
+		
+//		namesList = new JList(BabyName);
 		
 		frame.setLayout(new GridBagLayout()); 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -140,6 +143,8 @@ public class BabyNamePicker {
 		leftPanel.add(maleButton, c);
 		c.gridx = 1;
 		leftPanel.add(femaleButton, c);
+		c.gridx = 2;
+		leftPanel.add(unisexButton, c);
 		c.gridx = 0;
 		i++;
 		c.gridy = i;
@@ -156,12 +161,6 @@ public class BabyNamePicker {
 		i++;
 		c.gridy = i;
 		leftPanel.add(startWithMenu, c);
-		i++;
-		c.gridy = i;
-		leftPanel.add(endsWithText, c);
-		i++;
-		c.gridy = i;
-		leftPanel.add(endsWithMenu, c);
 		i++;
 		c.gridy = i;
 		leftPanel.add(numSuggestionsText, c);
@@ -206,6 +205,15 @@ public class BabyNamePicker {
 			}
     		
     	});
+    	//The Unisex button tells the Model to list both male and female names 
+    	unisexButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+    		
+    	});
     	//The Least Popular Button tells the Model to list names from least common to most common.
     	leastPopularButton.addActionListener(new ActionListener(){
 			@Override
@@ -236,15 +244,6 @@ public class BabyNamePicker {
 			}
     		
     	});
-    	//Selection in Ends With Menu tells the Model to list names ending with selected letter.
-    	endsWithMenu.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-    		
-    	});
     	//Selection in Num Suggestions Menu tells the Model to list selected number of names.
     	numSuggestionsMenu.addActionListener(new ActionListener(){
 			@Override
@@ -266,6 +265,5 @@ public class BabyNamePicker {
     	});
     }
 	
-
 
 }

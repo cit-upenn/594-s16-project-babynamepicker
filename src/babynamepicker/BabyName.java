@@ -1,13 +1,15 @@
 package babynamepicker;
 
+import java.util.Comparator;
 import java.util.HashMap;
+
 
 /**
  * 
  * @author victoriayi
  *
  */
-public class BabyName implements Comparable<BabyName> {
+public class BabyName {
 	/**
 	 * instance variables
 	 */
@@ -17,7 +19,7 @@ public class BabyName implements Comparable<BabyName> {
 	private HashMap<Integer, Integer> popularity;
 	private int popTotal;
 	private int rating1, rating2;
-	private String sortType;
+	private float finalrating;
 	
 	/**
 	 * constructor
@@ -107,26 +109,73 @@ public class BabyName implements Comparable<BabyName> {
 		return (rating1 + rating2) / 2;
 	}
 	
-	/**
-	 * set the type that the baby names will get sorted by; either by rating or popularity
-	 * @param sort
-	 */
-	public void setSortType(String sort) { //popularity
-		sortType = sort; 
+	public void setFinalRating(float _rating) {
+		finalrating = _rating;
+	}
+	
+	public float getFinalRating() {
+		return finalrating;
 	}
 	
 	/**
-	 * to sort names by rating or popularity
+	 * sort names by rating
 	 */
-	@Override
-	public int compareTo(BabyName compare) {
-		double comp = 0;
-		
-		if(sortType.equals("rating")) comp = compare.getAvgRating() - this.getAvgRating();
-		else if(sortType.equals("pop")) comp = compare.getPopTotal() - this.getPopTotal();
-		
-        if(comp > 0) return 1;
-        else if(comp < 0) return -1;
-        else return 0;
+	public static Comparator<BabyName> ratingComparator() {
+		return new Comparator<BabyName>() {
+			
+			@Override
+			public int compare(BabyName o1, BabyName o2) {
+				double comp = 0;
+				comp = o2.getFinalRating() - o1.getFinalRating();
+				comp = o2.getPopTotal() - o1.getPopTotal();
+				
+		        if(comp > 0) return 1;
+		        else if(comp < 0) return -1;
+		        else return 0;
+			}	
+		};
 	}
+	
+	/**
+	 * sort names by popularity
+	 */
+	public static Comparator<BabyName> popComparator() {
+		return new Comparator<BabyName>() {
+			
+			@Override
+			public int compare(BabyName o1, BabyName o2) {
+				double comp = 0;
+				comp = o2.getPopTotal() - o1.getPopTotal();
+				
+		        if(comp > 0) return 1;
+		        else if(comp < 0) return -1;
+		        else return 0;
+			}	
+		};
+	}
+	
+	/**
+	 * To check if two items are equal by ID
+	 */
+	 @Override
+	 public boolean equals (Object object) {
+	     boolean result = false;
+	     if (object == null || object.getClass() != getClass()) {
+	         result = false;
+	     } else {
+	         BabyName compare = (BabyName) object;
+	         if (this.name.equals(compare.getName())) {
+	             result = true;
+	         }
+	     }
+	     return result;
+	 }
+	 
+	 /**
+	  * Hashcode to accompany the overriding above
+	  */
+	 @Override
+	 public int hashCode() {
+		 return this.getName().hashCode();
+	 }
 }

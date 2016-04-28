@@ -1,6 +1,8 @@
 package babynamepicker;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class Dataset {
@@ -9,6 +11,7 @@ public class Dataset {
 	 */
 	private HashMap<String, BabyName> dataMap;
 	private ArrayList<BabyName> dataList;
+	
 	
 	/**
 	 * constructor
@@ -29,6 +32,22 @@ public class Dataset {
 	}
 	
 	
+	/**
+	 * @return the dataList
+	 */
+	public ArrayList<BabyName> getDataList() {
+		return dataList;
+	}
+
+
+	/**
+	 * @param dataList the dataList to set
+	 */
+	public void setDataList(ArrayList<BabyName> dataList) {
+		this.dataList = dataList;
+	}
+
+
 	/**
 	 * Add new name to the data HashMap
 	 * @param name
@@ -55,12 +74,32 @@ public class Dataset {
 	 */
 	public void finalList() {
 		for(String i : dataMap.keySet()) {
-//			dataMap.get(i).setPopTotal(50);
+			for(int j = 1880; j < 2015; j++) {
+				if(!dataMap.get(i).containsYear(j)) dataMap.get(i).addPop(j, 0);
+			}
+			dataMap.get(i).setPopTotal(50);
 			dataList.add(dataMap.get(i));
 		}
-		for(BabyName i : dataList) {
-			System.out.println(i.getName() + " " + i.getSex() + i.getPopTotal());
-		}
-		System.out.println(dataList.size());
+		Collections.sort(dataList, new nameComparator());
+//		for(BabyName i : dataList) {
+//			System.out.println(i.getName() + " " + i.getSex() + i.getPopTotal());
+//		}
+//		System.out.println(dataList.size());
 	}
+	
+	 public class nameComparator implements Comparator<BabyName>{
+
+			public int compare(BabyName b1, BabyName b2) {
+				// TODO Auto-generated method stub
+				String baby1 = b1.getName();
+				String baby2 = b2.getName();
+				
+				return baby1.compareTo(baby2);
+			}
+	 
+	}
+	 
+	 public void filterList() {
+		 
+	 }
 }

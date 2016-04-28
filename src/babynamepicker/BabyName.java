@@ -70,12 +70,15 @@ public class BabyName {
 		popularity.put(year, pop);
 	}
 	
+	public boolean containsYear(int year) {
+		return popularity.containsKey(year);
+	}
+	
 	/**
 	 * sum up total popularity in the last n years
 	 * @param n
 	 */
 	public void setPopTotal(int n) {
-		System.out.println(popularity.size());
 		for(int i = 2014; i > 2014 - n; i--) {
 			popTotal += popularity.get(i);
 		}
@@ -155,6 +158,7 @@ public class BabyName {
 		};
 	}
 	
+	
 	/**
 	 * To check if two items are equal by ID
 	 */
@@ -179,4 +183,6 @@ public class BabyName {
 	 public int hashCode() {
 		 return this.getName().hashCode();
 	 }
+	 
+	
 }

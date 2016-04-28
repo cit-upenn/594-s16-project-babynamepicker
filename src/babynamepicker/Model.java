@@ -7,7 +7,37 @@ import java.util.Observable;
 
 
 public class Model extends Observable {
+	private FileReader fr;
+	private Dataset d;
+	private ArrayList<String> userList;
 	
+	public Model(String path, int year) {
+		fr = new FileReader("names/", 1888);
+		d = fr.parseData();
+		userList = new ArrayList<String>();
+	}
+	
+	/**
+	 * @return dataList
+	 */
+	public ArrayList<BabyName> getDataList() {
+		return d.getDataList();
+	}
+
+	/**
+	 * @return the userList
+	 */
+	public ArrayList<String> getUserList() {
+		return userList;
+	}
+
+	/**
+	 * @param userList the userList to set
+	 */
+	public void setUserList(ArrayList<String> userList) {
+		this.userList = userList;
+	}
+
 	public void rateName() {
 		
 	}
@@ -37,4 +67,20 @@ public class Model extends Observable {
 		BabyName[] array = list.toArray(new BabyName[0]);
 		return array;
 	}
+	
+	public void getNumSuggestedList(int numSuggested) {
+		if (!userList.isEmpty()) {
+			userList.clear();
+		} //this won't work if we want to change the num displayed after other filters
+		
+		for (int i = 0; i < numSuggested; i++) {
+			userList.add(getDataList().get(i).getName());
+			setChanged();
+			notifyObservers();
+		}
+	}
+	
+	
+	
+	
 }

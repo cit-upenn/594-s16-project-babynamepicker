@@ -66,6 +66,7 @@ public class BabyNamePicker {
 	/** The View object displays what is happening in the Model. */
 	private View view;
 	
+	
 	/**
 	 * Runs the Baby Name Picker program
 	 * @param args Ignored
@@ -73,8 +74,7 @@ public class BabyNamePicker {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		FileReader fr = new FileReader("names/", 1888);
-		fr.parseData();
+		
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
             	BabyNamePicker b = new BabyNamePicker();
@@ -88,7 +88,7 @@ public class BabyNamePicker {
 	 * Sets up communication between the components
 	 */
 	private void init() {
-		model = new Model();
+		model = new Model("names/", 1888);
 		view = new View(model);
 		model.addObserver(view);
 	}
@@ -139,18 +139,16 @@ public class BabyNamePicker {
 		numSuggestions = new String[] {"10", "20", "30","40", "50"};
 		numSuggestionsMenu = new JComboBox<String>(numSuggestions);
 		
-		listModel = new DefaultListModel();
-		testNames = new String[] {"Grace", "Vicky", "Ryan", "Gabe", "Lydia", "Danny", "Matthew", "Ashley", "Harry", "Hermione", "Ron", "Snape", "Dumbledore", "Remus", "Fred", "George"};
-		for (int i = 0; i < testNames.length; i++) {
-			listModel.addElement(testNames[i]);
-		}
-		namesList = new JList(listModel);
-		namesList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		namesList.setLayoutOrientation(JList.VERTICAL);
-		namesList.setVisibleRowCount(10);
-		listScroller = new JScrollPane(namesList);
-		listScroller.setPreferredSize(new Dimension(150, 400));
-		
+//		listModel = new DefaultListModel();
+//		for (int i = 0; i < model.getDataList().size(); i++) {
+//			listModel.addElement(model.getDataList().get(i).getName());
+//		}
+//		namesList = new JList(listModel);
+//		namesList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+//		namesList.setLayoutOrientation(JList.VERTICAL);
+//		namesList.setVisibleRowCount(10);
+//		listScroller = new JScrollPane(namesList);
+//		listScroller.setPreferredSize(new Dimension(150, 400));
 		
 		
 		frame.setLayout(new GridBagLayout()); 
@@ -210,9 +208,9 @@ public class BabyNamePicker {
 		c.gridy = 1;
 		c.weightx = 0.9;
 		c.anchor = GridBagConstraints.CENTER;
-//		frame.add(view, c);
-		frame.add(rightPanel, c);
-		rightPanel.add(listScroller, BorderLayout.CENTER);
+		frame.add(view, c);
+//		frame.add(rightPanel, c);
+//		rightPanel.add(listScroller, BorderLayout.CENTER);
 		
 	}
 	
@@ -300,20 +298,23 @@ public class BabyNamePicker {
 				switch(numSuggestions) {
 				case 10:
 					System.out.println("10 users selected.");
+					model.getNumSuggestedList(10);
 					break;
 				case 20:
 					System.out.println("20 users selected.");
-					listModel.remove(5);
-					listModel.remove(3);
+					model.getNumSuggestedList(20);
 					break;
 				case 30:
 					System.out.println("30 users selected.");
+					model.getNumSuggestedList(30);
 					break;
 				case 40:
 					System.out.println("40 users selected.");
+					model.getNumSuggestedList(40);
 					break;
 				case 50:
 					System.out.println("50 users selected.");
+					model.getNumSuggestedList(50);
 					break;
 				}
 				

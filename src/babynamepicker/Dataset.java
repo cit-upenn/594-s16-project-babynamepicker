@@ -11,7 +11,12 @@ public class Dataset {
 	 */
 	private HashMap<String, BabyName> dataMap;
 	private ArrayList<BabyName> dataList;
-	
+	private ArrayList<String> userList;
+	private String gender;
+	private boolean leastToMost;
+	private char startsWith;
+	private int popularYears;
+	private int numSuggestions;
 	
 	/**
 	 * constructor
@@ -19,6 +24,12 @@ public class Dataset {
 	public Dataset() {
 		dataMap = new HashMap<String, BabyName>();
 		dataList = new ArrayList<BabyName>();
+		userList = new ArrayList<String>();
+		gender = null;
+		leastToMost = false;
+		startsWith = '0';
+		popularYears = 0;
+		numSuggestions = 0;
 	}
 	
 	
@@ -100,6 +111,141 @@ public class Dataset {
 	}
 	 
 	 public void filterList() {
+		 if (!userList.isEmpty()) {
+			 userList.clear();
+		 }
 		 
+		 if (gender == "male") {
+			 for (BabyName b : dataList) {
+				 if (b.getSex().equals("M")) {
+					userList.add(b.getName()); 
+				 } 
+			 }
+		 } else if (gender == "female") {
+			 for (BabyName b: dataList) {
+				 if (b.getSex().equals("F")) {
+					 userList.add(b.getName());
+				 }
+			 }
+		 } else if (gender == "both") {
+			 for (BabyName b : dataList) {
+				 userList.add(b.getName());
+			 }
+		 }
+		 
+		 if (leastToMost == false) {
+			 //Comparator class 
+		 } else if (leastToMost == true) {
+			//Comparator class 
+		 }
+		 
+		 if (startsWith != '0') {
+			 for (String s : userList) {
+				 if (s.charAt(0) != startsWith) {
+					 userList.remove(s);
+				 }
+			 }
+		 }
+		 
+		 //popularYears
+		 
+		 
+		 //numSuggestions
 	 }
+
+
+	/**
+	 * @return the gender
+	 */
+	public String getGender() {
+		return gender;
+	}
+
+
+	/**
+	 * @param gender the gender to set
+	 */
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+
+	/**
+	 * @return the leastToMost
+	 */
+	public boolean isLeastToMost() {
+		return leastToMost;
+	}
+
+
+	/**
+	 * @param leastToMost the leastToMost to set
+	 */
+	public void setLeastToMost(boolean leastToMost) {
+		this.leastToMost = leastToMost;
+	}
+
+
+	/**
+	 * @return the startsWith
+	 */
+	public char getStartsWith() {
+		return startsWith;
+	}
+
+
+	/**
+	 * @param startsWith the startsWith to set
+	 */
+	public void setStartsWith(char startsWith) {
+		this.startsWith = startsWith;
+	}
+
+
+	/**
+	 * @return the popularYears
+	 */
+	public int getPopularYears() {
+		return popularYears;
+	}
+
+
+	/**
+	 * @param popularYears the popularYears to set
+	 */
+	public void setPopularYears(int popularYears) {
+		this.popularYears = popularYears;
+	}
+
+
+	/**
+	 * @return the numSuggestions
+	 */
+	public int getNumSuggestions() {
+		return numSuggestions;
+	}
+
+
+	/**
+	 * @param numSuggestions the numSuggestions to set
+	 */
+	public void setNumSuggestions(int numSuggestions) {
+		this.numSuggestions = numSuggestions;
+	}
+
+
+	/**
+	 * @return the userList
+	 */
+	public ArrayList<String> getUserList() {
+		return userList;
+	}
+
+
+	/**
+	 * @param userList the userList to set
+	 */
+	public void setUserList(ArrayList<String> userList) {
+		this.userList = userList;
+	}
 }

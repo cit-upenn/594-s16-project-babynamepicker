@@ -101,10 +101,10 @@ public class FilterFrame extends JPanel {
 		numSuggestions = new String[] {"10", "20", "30","40", "50"};
 		numSuggestionsMenu = new JComboBox<String>(numSuggestions);
 		
-		String[] test = new String[] {"Harry", "Hermione", "Ron", "Snape", "Dumbledore", "Remus", "Fred", "George"};
-		for (int i = 0; i < test.length; i++) {
-			secondTestNames.add(test[i]);
-		}
+//		String[] test = new String[] {"Harry", "Hermione", "Ron", "Snape", "Dumbledore", "Remus", "Fred", "George"};
+//		for (int i = 0; i < test.length; i++) {
+//			secondTestNames.add(test[i]);
+//		}
 		
 		fr = new FileReader("names/", 1888);
 		dataset = fr.parseData();
@@ -188,9 +188,10 @@ public class FilterFrame extends JPanel {
 //		frame.pack();
 //		frame.setSize(700, 700);
 //		frame.setVisible(true);
-		contentPanel.setSize(700, 700);
-		contentPanel.setVisible(true);
-		
+//		contentPanel.setSize(700, 700);
+//		contentPanel.setVisible(false);
+		this.setSize(700, 700);
+		this.setVisible(false);
 		
 	}
 	

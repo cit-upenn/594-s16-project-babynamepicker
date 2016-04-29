@@ -1,9 +1,13 @@
+/**
+ * This class represents the DataSet of the Baby Name Picker project.
+ */
 package babynamepicker;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Stack;
 
 public class Dataset {
 	/**
@@ -11,12 +15,11 @@ public class Dataset {
 	 */
 	private HashMap<String, BabyName> dataMap;
 	private ArrayList<BabyName> dataList;
-	private ArrayList<String> userList;
-	private String gender;
-	private boolean leastToMost;
-	private char startsWith;
-	private int popularYears;
-	private int numSuggestions;
+	private ArrayList<String> filteredList;
+	private char prevInitial, currentInitial;
+	private String prevGender, prevSort, currentGender, currentSort;
+	private int prevNYears, prevNumSuggest, currentNYears, currentNumSuggest;
+	private Stack<BabyName> sortingStack;
 	
 	/**
 	 * constructor
@@ -24,12 +27,18 @@ public class Dataset {
 	public Dataset() {
 		dataMap = new HashMap<String, BabyName>();
 		dataList = new ArrayList<BabyName>();
-		userList = new ArrayList<String>();
-		gender = null;
-		leastToMost = false;
-		startsWith = '0';
-		popularYears = 0;
-		numSuggestions = 0;
+		filteredList = new ArrayList<String>();
+		prevGender = "A";
+		prevSort = "A";
+		prevInitial = '0';
+		prevNYears = -1;
+		prevNumSuggest = 0;
+		currentGender = "A";
+		currentSort = "A";
+		currentInitial = '0';
+		currentNYears = 0;
+		currentNumSuggest = 0;
+		sortingStack = new Stack<BabyName>();
 	}
 	
 	
@@ -72,6 +81,10 @@ public class Dataset {
 		if(!dataMap.containsKey(name)) {
 			dataMap.put(name, new BabyName(name, sex, initial));
 		}
+		//if the name already exists but its sex varies, set it to be unisex
+		if(dataMap.containsKey(name) && !dataMap.get(name).getSex().equals(sex)) {
+			dataMap.get(name).setSex("U");
+		}
 		//add year and popularity to the BabyName's popularity HashMap
 		dataMap.get(name).addPop(year, pop);
 	}
@@ -88,164 +101,223 @@ public class Dataset {
 			for(int j = 1880; j < 2015; j++) {
 				if(!dataMap.get(i).containsYear(j)) dataMap.get(i).addPop(j, 0);
 			}
-			dataMap.get(i).setPopTotal(50);
 			dataList.add(dataMap.get(i));
 		}
 		Collections.sort(dataList, new nameComparator());
 //		for(BabyName i : dataList) {
 //			System.out.println(i.getName() + " " + i.getSex() + i.getPopTotal());
 //		}
-//		System.out.println(dataList.size());
 	}
 	
-	 public class nameComparator implements Comparator<BabyName>{
-
-			public int compare(BabyName b1, BabyName b2) {
-				// TODO Auto-generated method stub
-				String baby1 = b1.getName();
-				String baby2 = b2.getName();
-				
-				return baby1.compareTo(baby2);
-			}
-	 
-	}
+	
 	 
 	 public void filterList() {
-		 if (!userList.isEmpty()) {
-			 userList.clear();
-		 }
+		 /*
+		  * gender: A= show all; F= female; M= male; U= unisex
+		  * sort: A= alphabetical; P= pop high to low; p= pop low to high
+		  * initial: 0=no preference
+		  * nYears: 0= all time
+		  * numSuggest: 0=show all
+		  */
 		 
-		 if (gender == "male") {
-			 for (BabyName b : dataList) {
-				 if (b.getSex().equals("M")) {
-					userList.add(b.getName()); 
+		 //re-filter the list ONLY if any filter has changed from before
+		 if(!(currentGender.equals(prevGender) && currentSort.equals(prevSort) && currentInitial == prevInitial
+				 && currentNYears == prevNYears && currentNumSuggest == prevNumSuggest)) {
+			 
+			 //clear the list
+			 filteredList.clear();
+			 
+			 //if the filter value for "most popular in the last n years" has changed, recalculate popTotal
+			 if(currentNYears != prevNYears) {
+				 for(String i : dataMap.keySet()) {
+					 if(currentNYears == 0) dataMap.get(i).setPopTotal(135);
+					 else dataMap.get(i).setPopTotal(currentNYears);
+				 }
+			 }
+			 
+			 //sort alphabetically
+			 if(!currentSort.equals(prevSort) && currentSort.equals("A")) {
+				 Collections.sort(dataList, new nameComparator());
+			
+			 } else if(currentSort.equals("p") || currentSort.equals("P")) {
+				//else sort by popularity
+				 Collections.sort(dataList, new popComparator());
+				 
+				 //if sorting low to high, use a stack to reverse the order
+				 if(currentSort.equals("p")) {
+					 sortingStack.clear();
+					 //push BabyNames onto stack
+					 for(int i = 0; i < dataList.size(); i++) {
+						 sortingStack.push(dataList.get(i));
+					 }
+					 //add to list the name string of the popped off BabyName object
+					 for(int i = 0; i < sortingStack.size(); i++) {
+						 dataList.clear();
+						 dataList.add(sortingStack.pop());
+					 }
+				 }
+			 }
+			 
+			 //set how many to add to the list
+			 int n;
+			 if(currentNumSuggest == 0) n = dataList.size(); //add all
+			 else n = currentNumSuggest;
+			 
+			 //add names to list!
+			 for(int i = 0; i < n; i++) {
+				 BabyName b = dataList.get(i);
+				 
+				 //add only names of the specified gender (and unisex names, since they apply to either male/female)
+				 if (b.getSex().equals(currentGender) || b.getSex().equals("U")) {
+					 //if a certain initial is preferred
+					 if(currentInitial != '0') {
+						 if(b.getInitial() == currentInitial) { //add only names of that initial
+							 String s = b.getName() + " (" + b.getPopTotal() + ")";
+							 filteredList.add(s);
+						 }
+					 } else {
+						 String s = b.getName() + " (" + b.getPopTotal() + ")";
+						 filteredList.add(s); 
+					 }
 				 } 
 			 }
-		 } else if (gender == "female") {
-			 for (BabyName b: dataList) {
-				 if (b.getSex().equals("F")) {
-					 userList.add(b.getName());
-				 }
-			 }
-		 } else if (gender == "both") {
-			 for (BabyName b : dataList) {
-				 userList.add(b.getName());
-			 }
+			 
+			 //store these filters to compare with the next batch
+			 prevGender = currentGender;
+			 prevSort = currentSort;
+			 prevInitial = currentInitial;
+			 prevNYears = currentNYears;
+			 prevNumSuggest = currentNumSuggest;
 		 }
 		 
-		 if (leastToMost == false) {
-			 //Comparator class 
-		 } else if (leastToMost == true) {
-			//Comparator class 
-		 }
-		 
-		 if (startsWith != '0') {
-			 for (String s : userList) {
-				 if (s.charAt(0) != startsWith) {
-					 userList.remove(s);
-				 }
-			 }
-		 }
-		 
-		 //popularYears
-		 
-		 
-		 //numSuggestions
 	 }
 
-
+	 /**
+	  * sort names alphabetically
+	  */
+	 public class nameComparator implements Comparator<BabyName>{
+		public int compare(BabyName b1, BabyName b2) {
+			String baby1 = b1.getName();
+			String baby2 = b2.getName();
+					
+			return baby1.compareTo(baby2);
+		}
+	 }
+	 
 	/**
-	 * @return the gender
+	 * sort names by rating
 	 */
-	public String getGender() {
-		return gender;
+	public class ratingComparator implements Comparator<BabyName> {
+		public int compare(BabyName o1, BabyName o2) {
+			double comp = 0;
+			comp = o2.getFinalRating() - o1.getFinalRating();
+			comp = o2.getPopTotal() - o1.getPopTotal();
+					
+			if(comp > 0) return 1;
+			else if(comp < 0) return -1;
+			else return 0;
+		}	
 	}
-
-
+		
 	/**
-	 * @param gender the gender to set
+	 * sort names by popularity
 	 */
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-
-	/**
-	 * @return the leastToMost
-	 */
-	public boolean isLeastToMost() {
-		return leastToMost;
-	}
-
-
-	/**
-	 * @param leastToMost the leastToMost to set
-	 */
-	public void setLeastToMost(boolean leastToMost) {
-		this.leastToMost = leastToMost;
-	}
-
-
-	/**
-	 * @return the startsWith
-	 */
-	public char getStartsWith() {
-		return startsWith;
-	}
-
-
-	/**
-	 * @param startsWith the startsWith to set
-	 */
-	public void setStartsWith(char startsWith) {
-		this.startsWith = startsWith;
-	}
-
-
-	/**
-	 * @return the popularYears
-	 */
-	public int getPopularYears() {
-		return popularYears;
-	}
-
-
-	/**
-	 * @param popularYears the popularYears to set
-	 */
-	public void setPopularYears(int popularYears) {
-		this.popularYears = popularYears;
-	}
-
-
-	/**
-	 * @return the numSuggestions
-	 */
-	public int getNumSuggestions() {
-		return numSuggestions;
-	}
-
-
-	/**
-	 * @param numSuggestions the numSuggestions to set
-	 */
-	public void setNumSuggestions(int numSuggestions) {
-		this.numSuggestions = numSuggestions;
+	public class popComparator implements Comparator<BabyName>  {
+		public int compare(BabyName o1, BabyName o2) {
+			double comp = 0;
+			comp = o2.getPopTotal() - o1.getPopTotal();
+					
+			if(comp > 0) return 1;
+			else if(comp < 0) return -1;
+			else return 0;
+		}	
 	}
 
 
 	/**
 	 * @return the userList
 	 */
-	public ArrayList<String> getUserList() {
-		return userList;
+	public ArrayList<String> getFilteredList() {
+		return filteredList;
 	}
 
 
 	/**
-	 * @param userList the userList to set
+	 * @return the currentInitial
 	 */
-	public void setUserList(ArrayList<String> userList) {
-		this.userList = userList;
+	public char getCurrentInitial() {
+		return currentInitial;
+	}
+
+
+	/**
+	 * @param currentInitial the currentInitial to set
+	 */
+	public void setCurrentInitial(char currentInitial) {
+		this.currentInitial = currentInitial;
+	}
+
+
+	/**
+	 * @return the currentGender
+	 */
+	public String getCurrentGender() {
+		return currentGender;
+	}
+
+
+	/**
+	 * @param currentGender the currentGender to set
+	 */
+	public void setCurrentGender(String currentGender) {
+		this.currentGender = currentGender;
+	}
+
+
+	/**
+	 * @return the currentSort
+	 */
+	public String getCurrentSort() {
+		return currentSort;
+	}
+
+
+	/**
+	 * @param currentSort the currentSort to set
+	 */
+	public void setCurrentSort(String currentSort) {
+		this.currentSort = currentSort;
+	}
+
+
+	/**
+	 * @return the currentNYears
+	 */
+	public int getCurrentNYears() {
+		return currentNYears;
+	}
+
+
+	/**
+	 * @param currentNYears the currentNYears to set
+	 */
+	public void setCurrentNYears(int currentNYears) {
+		this.currentNYears = currentNYears;
+	}
+
+
+	/**
+	 * @return the currentNumSuggest
+	 */
+	public int getCurrentNumSuggest() {
+		return currentNumSuggest;
+	}
+
+
+	/**
+	 * @param currentNumSuggest the currentNumSuggest to set
+	 */
+	public void setCurrentNumSuggest(int currentNumSuggest) {
+		this.currentNumSuggest = currentNumSuggest;
 	}
 }

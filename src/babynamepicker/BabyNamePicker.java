@@ -79,7 +79,7 @@ public class BabyNamePicker {
      * Displays the GUI.
      */
 	private void display() {
-		model.getFilterFrames()[0].changeVisibility();
+//		model.getFilterFrames()[0].changeVisibility();
 		attachListenersToComponents();
 	}
 	

@@ -99,13 +99,12 @@ public class Dataset {
 	public void finalList() {
 		for(String i : dataMap.keySet()) {
 			for(int j = 1880; j < 2015; j++) {
-<<<<<<< HEAD
 				if(!dataMap.get(i).containsYear(j)) {
 					dataMap.get(i).addPop(j, 0);
 				}
-=======
+				
 				if(!dataMap.get(i).containsYear(j)) dataMap.get(i).addPop(j, 0);
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
+
 			}
 			dataList.add(dataMap.get(i));
 		}
@@ -142,7 +141,7 @@ public class Dataset {
 			 }
 			 
 			 //sort alphabetically
-<<<<<<< HEAD
+
 			 if(!currentSort.equals(prevSort) || currentNYears != prevNYears){ //***
 				 if(currentSort.equals("A")) {
 					 Collections.sort(dataList, new nameComparator());
@@ -151,7 +150,7 @@ public class Dataset {
 					//else sort by popularity
 					 //***
 					 if(currentNYears != prevNYears || currentSort.equals("P") || ( (prevSort.equals("A") || prevSort.equals("")) && currentSort.equals("p") )) {
-=======
+
 			 if(!currentSort.equals(prevSort)){
 				 if(currentSort.equals("A")) {
 					 Collections.sort(dataList, new nameComparator());
@@ -159,7 +158,6 @@ public class Dataset {
 				 } else {
 					//else sort by popularity
 					 if(currentSort.equals("P") || ( (prevSort.equals("A") || prevSort.equals("")) && currentSort.equals("p") )) {
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 						 Collections.sort(dataList, new popComparator());
 					 }
 					 
@@ -167,16 +165,13 @@ public class Dataset {
 					 if(currentSort.equals("p")) {
 						 sortingStack.clear();
 						 //push BabyNames onto stack
-<<<<<<< HEAD
-=======
+
 						 System.out.println("dataList " + dataList.size());
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 						 for(int i = 0; i < dataList.size(); i++) {
 							 sortingStack.push(dataList.get(i));
 						 }
 						 //add to list the name string of the popped off BabyName object
 						 dataList.clear();
-<<<<<<< HEAD
 						 while(!sortingStack.isEmpty()) {
 							 dataList.add(sortingStack.pop());
 						 }
@@ -216,7 +211,6 @@ public class Dataset {
 				 else j = filteredList.size();
 			 }
 			 System.out.println("filteredList " + filteredList.size());
-=======
 						 System.out.println("stack " + sortingStack.size());
 						 while(!sortingStack.isEmpty()) {
 							 dataList.add(sortingStack.pop());
@@ -253,7 +247,6 @@ public class Dataset {
 					 }
 				 } 
 			 }
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 			 
 			 //store these filters to compare with the next batch
 			 prevGender = currentGender;
@@ -314,8 +307,6 @@ public class Dataset {
 		return filteredList;
 	}
 
-<<<<<<< HEAD
-=======
 
 	/**
 	 * @return the currentInitial
@@ -324,8 +315,6 @@ public class Dataset {
 		return currentInitial;
 	}
 
-
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 	/**
 	 * @param currentInitial the currentInitial to set
 	 */
@@ -333,8 +322,6 @@ public class Dataset {
 		this.currentInitial = currentInitial;
 	}
 
-<<<<<<< HEAD
-=======
 
 	/**
 	 * @return the currentGender
@@ -343,8 +330,6 @@ public class Dataset {
 		return currentGender;
 	}
 
-
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 	/**
 	 * @param currentGender the currentGender to set
 	 */
@@ -352,8 +337,6 @@ public class Dataset {
 		this.currentGender = currentGender;
 	}
 
-<<<<<<< HEAD
-=======
 
 	/**
 	 * @return the currentSort
@@ -362,8 +345,6 @@ public class Dataset {
 		return currentSort;
 	}
 
-
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 	/**
 	 * @param currentSort the currentSort to set
 	 */
@@ -371,8 +352,6 @@ public class Dataset {
 		this.currentSort = currentSort;
 	}
 
-<<<<<<< HEAD
-=======
 
 	/**
 	 * @return the currentNYears
@@ -382,7 +361,6 @@ public class Dataset {
 	}
 
 
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 	/**
 	 * @param currentNYears the currentNYears to set
 	 */
@@ -390,8 +368,6 @@ public class Dataset {
 		this.currentNYears = currentNYears;
 	}
 
-<<<<<<< HEAD
-=======
 
 	/**
 	 * @return the currentNumSuggest
@@ -400,8 +376,6 @@ public class Dataset {
 		return currentNumSuggest;
 	}
 
-
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 	/**
 	 * @param currentNumSuggest the currentNumSuggest to set
 	 */

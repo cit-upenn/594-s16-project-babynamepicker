@@ -27,11 +27,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 
-<<<<<<< HEAD
-public class FilterFrame {
-=======
+
+
 public class FilterFrame extends JPanel {
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 
 	private JFrame frame;
 	
@@ -67,19 +65,18 @@ public class FilterFrame extends JPanel {
 	private FileReader fr;
 	
 	public FilterFrame() {
-<<<<<<< HEAD
+
 		frame = new JFrame("one night ultimate baby");
 		frame.setLayout(new GridBagLayout()); 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 //		this.setLayout(new GridBagLayout());
-=======
+
 //		frame = new JFrame("Welcome to Baby Name Picker!");
 //		frame.setLayout(new GridBagLayout()); 
 //		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		this.setLayout(new GridBagLayout());
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 //		contentPanel = new JPanel(new GridBagLayout());
 		
 		leftPanel = new JPanel(new GridBagLayout());
@@ -113,21 +110,20 @@ public class FilterFrame extends JPanel {
 		numSuggestions = new String[] {"10", "20", "30","40", "50"};
 		numSuggestionsMenu = new JComboBox<String>(numSuggestions);
 		
-<<<<<<< HEAD
+
 		String[] test = new String[] {"Harry", "Hermione", "Ron", "Snape", "Dumbledore", "Remus", "Fred", "George"};
 		for (int i = 0; i < test.length; i++) {
 			secondTestNames.add(test[i]);
 		}
 		
 		fr = new FileReader("names/", 1879); //***
-=======
+
 //		String[] test = new String[] {"Harry", "Hermione", "Ron", "Snape", "Dumbledore", "Remus", "Fred", "George"};
 //		for (int i = 0; i < test.length; i++) {
 //			secondTestNames.add(test[i]);
 //		}
 		
 		fr = new FileReader("names/", 1888);
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 		dataset = fr.parseData();
 		listModel = new DefaultListModel();
 		for (int i = 0; i < dataset.getDataList().size(); i++) {
@@ -191,21 +187,21 @@ public class FilterFrame extends JPanel {
 		leftPanel.add(readyToRankButton, c);
 		c.gridx = 0;
 		c.gridy = 1;
-<<<<<<< HEAD
+
 		frame.add(leftPanel, c);
 //		contentPanel.add(leftPanel, c);
 //		this.add(leftPanel, c);
-=======
+
 //		frame.add(leftPanel, c);
 //		contentPanel.add(leftPanel, c);
 		this.add(leftPanel, c);
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
+
 		rightPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		c.gridx = 3;
 		c.gridy = 1;
 		c.weightx = 0.9;
 		c.anchor = GridBagConstraints.CENTER;
-<<<<<<< HEAD
+
 		frame.add(rightPanel, c);
 		rightPanel.add(listScroller, BorderLayout.CENTER);
 //		contentPanel.add(rightPanel, c);
@@ -219,7 +215,7 @@ public class FilterFrame extends JPanel {
 //		contentPanel.setSize(700, 700);
 //		contentPanel.setVisible(true);
 		
-=======
+
 //		frame.add(rightPanel, c);
 		rightPanel.add(listScroller, BorderLayout.CENTER);
 //		contentPanel.add(rightPanel, c);
@@ -234,7 +230,6 @@ public class FilterFrame extends JPanel {
 //		contentPanel.setVisible(false);
 		this.setSize(700, 700);
 		this.setVisible(false);
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 		
 	}
 	
@@ -325,11 +320,9 @@ public class FilterFrame extends JPanel {
 				// TODO Auto-generated method stub
 				listModel.removeAllElements();
 				alphaButton.setEnabled(true);
-<<<<<<< HEAD
+
 				dataset.setCurrentSort("P");
-=======
 				dataset.setCurrentGender("P");
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 				dataset.filterList();
 				for (int j = 0; j < dataset.getFilteredList().size(); j++) {
 					listModel.addElement(dataset.getFilteredList().get(j));
@@ -386,11 +379,8 @@ public class FilterFrame extends JPanel {
 				JComboBox c = (JComboBox) e.getSource();
 				String selectedItem = (String) c.getSelectedItem();
 				int numSuggestions = Integer.parseInt(selectedItem);
-<<<<<<< HEAD
 				System.out.println("filter " + numSuggestions);
-=======
 				System.out.println(numSuggestions);
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 				dataset.setCurrentNumSuggest(numSuggestions);
 				dataset.filterList();
 				for (int j = 0; j < dataset.getFilteredList().size(); j++) {
@@ -432,11 +422,8 @@ public class FilterFrame extends JPanel {
 				// TODO Auto-generated method stub
 				listModel.removeAllElements();
 				System.out.println("List will be ordered alphabetically.");
-<<<<<<< HEAD
 				dataset.setCurrentSort("A");
 				dataset.filterList();
-=======
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 				Collections.sort(secondTestNames);
 				alphaButton.setEnabled(false);
 				popularityGroup.clearSelection();

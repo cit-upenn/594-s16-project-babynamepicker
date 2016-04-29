@@ -54,11 +54,9 @@ public class RankingFrame extends JPanel {
 //		frame.pack();
 //		frame.setSize(700, 700);
 //		frame.setVisible(false);
-<<<<<<< HEAD
-=======
+
 		this.setSize(700, 700);	
 		this.setVisible(false);
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 	}
 	
 	public void changeVisibility(boolean toVisible) {

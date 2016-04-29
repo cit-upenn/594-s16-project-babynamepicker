@@ -1,11 +1,9 @@
 package babynamepicker;
 
 import java.awt.BorderLayout;
-<<<<<<< HEAD
-=======
+
 import java.awt.CardLayout;
 import java.awt.GridBagLayout;
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -21,19 +19,11 @@ public class Controller {
 	private JFrame frame;
 	private JPanel mainPanel;
 	private JButton clickToContinue;
-<<<<<<< HEAD
-=======
 	private CardLayout mainCard;
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
-	
 	private Model model;
 	private View view;
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-		
-<<<<<<< HEAD
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
             	Controller b = new Controller();
@@ -43,38 +33,37 @@ public class Controller {
         });
 	}
 	
-	private void init() {
-		model = new Model("names/", 1888);
-		view = new View(model);
-		model.addObserver(view);
-		
-		frame = new JFrame("Welcome to Baby Name Picker!");
-		frame.setSize(900, 900);
-		
-		mainPanel = new JPanel(new BorderLayout());
-		
-		clickToContinue = new JButton("Click To Continue");
-		mainPanel.add(clickToContinue, BorderLayout.SOUTH);
-		
-		frame.add(mainPanel);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-=======
-//		SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//            	Controller b = new Controller();
-//                b.init();
-//                b.display();
-//            }
-//        });
-		Controller c = new Controller();
-		c.init();
-		c.display();
-	}
+//	private void init() {
+//		model = new Model("names/", 1888);
+//		view = new View(model);
+//		model.addObserver(view);
+//		
+//		frame = new JFrame("Welcome to Baby Name Picker!");
+//		frame.setSize(900, 900);
+//		
+//		mainPanel = new JPanel(new BorderLayout());
+//		
+//		clickToContinue = new JButton("Click To Continue");
+//		mainPanel.add(clickToContinue, BorderLayout.SOUTH);
+//		
+//		frame.add(mainPanel);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setVisible(true);
+////		SwingUtilities.invokeLater(new Runnable() {
+////            public void run() {
+////            	Controller b = new Controller();
+////                b.init();
+////                b.display();
+////            }
+////        });
+//		Controller c = new Controller();
+//		c.init();
+//		c.display();
+//	}
 	
 	private void init() {
 		System.out.println("Start.");
-		model = new Model();
+//		model = new Model();
 		System.out.println("Made Model.");
 		view = new View(model);
 		System.out.println("Made View.");
@@ -94,8 +83,8 @@ public class Controller {
 		
 //		clickToContinue = new JButton("Click To Continue");
 //		mainPanel.add(clickToContinue, BorderLayout.SOUTH);
-		mainPanel.add(model.getPanel(0), "0");
-		mainPanel.add(model.getPanel(1), "1");
+//		mainPanel.add(model.getPanel(0), "0");
+//		mainPanel.add(model.getPanel(1), "1");
 		
 		
 		System.out.println("reached point 2.");
@@ -105,14 +94,9 @@ public class Controller {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		System.out.println("Reached point 3.");
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
-
 	}
 	
 	private void display() {
-		
-<<<<<<< HEAD
-=======
 		attachListenersToComponents();
 	}
 	
@@ -122,13 +106,12 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				int n = model.getCurrentDisplay();
-				n++;
-				model.setCurrentDisplay(n);
+//				int n = model.getCurrentDisplay();
+//				n++;
+//				model.setCurrentDisplay(n);
 			}
 			
 		});
->>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 	}
 
 

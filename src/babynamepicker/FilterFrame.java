@@ -11,6 +11,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -28,6 +30,9 @@ import javax.swing.ListSelectionModel;
 public class FilterFrame {
 
 	private JFrame frame;
+	
+	private JPanel contentPanel;
+	
 	private JPanel leftPanel;
 	private JPanel rightPanel;
 	private JTextArea genderText;
@@ -38,6 +43,7 @@ public class FilterFrame {
 	private JTextArea popularText;
 	private JRadioButton leastPopularButton;
 	private JRadioButton mostPopularButton;
+	private JButton alphaButton;
 	private ButtonGroup popularityGroup;
 	private JTextArea startsWithText;
 	private JComboBox<String> startWithMenu;
@@ -53,12 +59,15 @@ public class FilterFrame {
 	private JScrollPane listScroller;
 	private DefaultListModel listModel;
 	private Dataset dataset;
-	private String[] secondTestNames = new String[] {"Harry", "Hermione", "Ron", "Snape", "Dumbledore", "Remus", "Fred", "George"};
+	private ArrayList<String> secondTestNames = new ArrayList<String>();
+	private FileReader fr;
 	
 	public FilterFrame() {
 		frame = new JFrame("Welcome to Baby Name Picker!");
 		frame.setLayout(new GridBagLayout()); 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+//		contentPanel = new JPanel(new GridBagLayout());
 		
 		leftPanel = new JPanel(new GridBagLayout());
 		rightPanel = new JPanel(new BorderLayout());
@@ -78,6 +87,8 @@ public class FilterFrame {
 		maleOrFemaleGroup.add(unisexButton);
 		leastPopularButton = new JRadioButton("Least to Most");
 		mostPopularButton = new JRadioButton("Most to Least");
+		alphaButton = new JButton("Return to Alphabetical Ordering");
+		alphaButton.setEnabled(false);
 		popularityGroup = new ButtonGroup();
 		popularityGroup.add(leastPopularButton);
 		popularityGroup.add(mostPopularButton);
@@ -89,9 +100,16 @@ public class FilterFrame {
 		numSuggestions = new String[] {"10", "20", "30","40", "50"};
 		numSuggestionsMenu = new JComboBox<String>(numSuggestions);
 		
+		String[] test = new String[] {"Harry", "Hermione", "Ron", "Snape", "Dumbledore", "Remus", "Fred", "George"};
+		for (int i = 0; i < test.length; i++) {
+			secondTestNames.add(test[i]);
+		}
+		
+		fr = new FileReader("names/", 1888);
+		dataset = fr.parseData();
 		listModel = new DefaultListModel();
-		for (int i = 0; i < secondTestNames.length; i++) {
-			listModel.addElement(secondTestNames[i]);
+		for (int i = 0; i < dataset.getDataList().size(); i++) {
+			listModel.addElement(dataset.getDataList().get(i).getName());
 		}
 		namesList = new JList(listModel);
 //		namesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -145,10 +163,14 @@ public class FilterFrame {
 		leftPanel.add(numSuggestionsMenu, c);
 		i++;
 		c.gridy = i;
+		leftPanel.add(alphaButton, c);
+		i++;
+		c.gridy = i;
 		leftPanel.add(readyToRankButton, c);
 		c.gridx = 0;
 		c.gridy = 1;
 		frame.add(leftPanel, c);
+//		contentPanel.add(leftPanel, c);
 		rightPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		c.gridx = 3;
 		c.gridy = 1;
@@ -156,13 +178,38 @@ public class FilterFrame {
 		c.anchor = GridBagConstraints.CENTER;
 		frame.add(rightPanel, c);
 		rightPanel.add(listScroller, BorderLayout.CENTER);
+//		contentPanel.add(rightPanel, c);
 		
 		attachListenersToComponents();
 		
 		frame.pack();
 		frame.setSize(700, 700);
 		frame.setVisible(true);
+//		contentPanel.setSize(700, 700);
+//		contentPanel.setVisible(true);
 		
+		
+	}
+	
+	public void changeVisibility(boolean toVisible) {
+		if (toVisible == true) {
+			contentPanel.setVisible(true);
+		} else if (toVisible == false) {
+			contentPanel.setVisible(false);
+		}
+	}
+	
+	public JButton getReadyToRankButton() {
+		return readyToRankButton;
+	}
+	
+	private void updateDisplayedList() {
+		for (int i = 0; i < listModel.size(); i++) {
+			listModel.remove(i);
+		}
+		for (int j = 0; j < dataset.getFilteredList().size(); j++) {
+			listModel.addElement(dataset.getFilteredList().get(j));
+		}
 	}
 	
 	private void attachListenersToComponents() {
@@ -171,7 +218,12 @@ public class FilterFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				listModel.removeAllElements();
+				dataset.setCurrentGender("M");
+				dataset.filterList();
+				for (int j = 0; j < dataset.getFilteredList().size(); j++) {
+					listModel.addElement(dataset.getFilteredList().get(j));
+				}
 			}
     		
     	});
@@ -180,6 +232,12 @@ public class FilterFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				listModel.removeAllElements();
+				dataset.setCurrentGender("F");
+				dataset.filterList();
+				for (int j = 0; j < dataset.getFilteredList().size(); j++) {
+					listModel.addElement(dataset.getFilteredList().get(j));
+				}
 				
 			}
     		
@@ -189,7 +247,12 @@ public class FilterFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				listModel.removeAllElements();
+				dataset.setCurrentGender("U");
+				dataset.filterList();
+				for (int j = 0; j < dataset.getFilteredList().size(); j++) {
+					listModel.addElement(dataset.getFilteredList().get(j));
+				}
 			}
     		
     	});
@@ -198,7 +261,13 @@ public class FilterFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				listModel.removeAllElements();
+				alphaButton.setEnabled(true);
+				dataset.setCurrentSort("p");
+				dataset.filterList();
+				for (int j = 0; j < dataset.getFilteredList().size(); j++) {
+					listModel.addElement(dataset.getFilteredList().get(j));
+				}
 			}
     		
     	});
@@ -207,7 +276,13 @@ public class FilterFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				listModel.removeAllElements();
+				alphaButton.setEnabled(true);
+				dataset.setCurrentGender("P");
+				dataset.filterList();
+				for (int j = 0; j < dataset.getFilteredList().size(); j++) {
+					listModel.addElement(dataset.getFilteredList().get(j));
+				}
 				
 			}
     		
@@ -217,9 +292,16 @@ public class FilterFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				listModel.removeAllElements();
 				JComboBox c = (JComboBox) e.getSource();
 				String selectedItem = (String) c.getSelectedItem();
-				
+				char letter = selectedItem.charAt(0);
+				alphaButton.setEnabled(true);
+				dataset.setCurrentInitial(letter);
+				dataset.filterList();
+				for (int j = 0; j < dataset.getFilteredList().size(); j++) {
+					listModel.addElement(dataset.getFilteredList().get(j));
+				}
 			}
     		
     	});
@@ -228,9 +310,19 @@ public class FilterFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				listModel.removeAllElements();
+				int numYears = 0;
 				JComboBox c = (JComboBox) e.getSource();
 				String selectedItem = (String) c.getSelectedItem();
-				
+				if (!selectedItem.equals("All Time")) {
+					numYears = Integer.parseInt(selectedItem);
+				}
+				alphaButton.setEnabled(true);
+				dataset.setCurrentNYears(numYears);
+				dataset.filterList();
+				for (int j = 0; j < dataset.getFilteredList().size(); j++) {
+					listModel.addElement(dataset.getFilteredList().get(j));
+				}
 			}
     		
     	});
@@ -239,44 +331,69 @@ public class FilterFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				listModel.removeAllElements();
 				JComboBox c = (JComboBox) e.getSource();
 				String selectedItem = (String) c.getSelectedItem();
 				int numSuggestions = Integer.parseInt(selectedItem);
-				
-				switch(numSuggestions) {
-				case 10:
-					System.out.println("10 users selected.");
-//					model.getNumSuggestedList(10);
-					break;
-				case 20:
-					System.out.println("20 users selected.");
-//					model.getNumSuggestedList(20);
-					break;
-				case 30:
-					System.out.println("30 users selected.");
-//					model.getNumSuggestedList(30);
-					break;
-				case 40:
-					System.out.println("40 users selected.");
-//					model.getNumSuggestedList(40);
-					break;
-				case 50:
-					System.out.println("50 users selected.");
-//					model.getNumSuggestedList(50);
-					break;
+				System.out.println(numSuggestions);
+				dataset.setCurrentNumSuggest(numSuggestions);
+				dataset.filterList();
+				for (int j = 0; j < dataset.getFilteredList().size(); j++) {
+					listModel.addElement(dataset.getFilteredList().get(j));
 				}
+				
+//				switch(numSuggestions) {
+//				case 10:
+//					System.out.println("10 users selected.");
+//					
+//					break;
+//				case 20:
+//					System.out.println("20 users selected.");
+////					model.getNumSuggestedList(20);
+//					break;
+//				case 30:
+//					System.out.println("30 users selected.");
+////					model.getNumSuggestedList(30);
+//					break;
+//				case 40:
+//					System.out.println("40 users selected.");
+////					model.getNumSuggestedList(40);
+//					break;
+//				case 50:
+//					System.out.println("50 users selected.");
+////					model.getNumSuggestedList(50);
+//					break;
+//				}
+				alphaButton.setEnabled(true);
 				
 				
 			}
     		
     	});
-    	//Ready to Rank button tells Model to show next Pane.
+    	//Alpha button tells Panel to sort list alphabetically.
+    	alphaButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				listModel.removeAllElements();
+				System.out.println("List will be ordered alphabetically.");
+				Collections.sort(secondTestNames);
+				alphaButton.setEnabled(false);
+				popularityGroup.clearSelection();
+				for (int j = 0; j < dataset.getFilteredList().size(); j++) {
+					listModel.addElement(dataset.getFilteredList().get(j));
+				}
+				
+			}
+    		
+    	});
+//    	Ready to Rank button tells Model to show next Pane.
     	readyToRankButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 //				System.out.println("Button pressed");
-				frame.setVisible(false);
+//				frame.setVisible(false);
 				
 			}
     		

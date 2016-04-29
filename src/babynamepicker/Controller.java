@@ -1,5 +1,6 @@
 package babynamepicker;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -7,12 +8,15 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-public class Controller implements MouseListener {
+public class Controller {
 
 	private JFrame frame;
-	private JButton readyToRank;
+	private JPanel mainPanel;
+	private JButton clickToContinue;
+	
 	private Model model;
 	private View view;
 	
@@ -34,58 +38,23 @@ public class Controller implements MouseListener {
 		view = new View(model);
 		model.addObserver(view);
 		
-//		frame = new JFrame()
-//		model.addFilterFrame(0);
-//		model.addFilterFrame(1);
-//		model.addRankingFrame(0);
-//		model.addRankingFrame(1);
+		frame = new JFrame("Welcome to Baby Name Picker!");
+		frame.setSize(900, 900);
+		
+		mainPanel = new JPanel(new BorderLayout());
+		
+		clickToContinue = new JButton("Click To Continue");
+		mainPanel.add(clickToContinue, BorderLayout.SOUTH);
+		
+		frame.add(mainPanel);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+
 	}
 	
 	private void display() {
-		//have first filter frame displayed
-	}
-
-//	@Override
-//	public void actionPerformed(ActionEvent e) {
-//		// TODO Auto-generated method stub
-//		Object source = e.getSource();
-//		if (source instanceof JButton) {
-//			System.out.println("GOt the action.");
-//			model.setDisplayFrame("ranking", 0);
-//		}
-//	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		Object source = e.getSource();
-		if (source instanceof JButton) {
-			System.out.println("Got the action.");
-			model.setDisplayFrame("ranking", 0);
-		}
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 }

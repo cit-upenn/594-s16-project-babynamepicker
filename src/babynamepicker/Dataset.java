@@ -29,10 +29,10 @@ public class Dataset {
 		dataList = new ArrayList<BabyName>();
 		filteredList = new ArrayList<String>();
 		prevGender = "A";
-		prevSort = "A";
+		prevSort = "";
 		prevInitial = '0';
 		prevNYears = -1;
-		prevNumSuggest = 0;
+		prevNumSuggest = -1;
 		currentGender = "A";
 		currentSort = "A";
 		currentInitial = '0';
@@ -129,31 +129,41 @@ public class Dataset {
 			 
 			 //if the filter value for "most popular in the last n years" has changed, recalculate popTotal
 			 if(currentNYears != prevNYears) {
-				 for(String i : dataMap.keySet()) {
-					 if(currentNYears == 0) dataMap.get(i).setPopTotal(135);
-					 else dataMap.get(i).setPopTotal(currentNYears);
+				 for(BabyName i : dataList) {
+					 if(currentNYears == 0) i.setPopTotal(135);
+					 else i.setPopTotal(currentNYears);
 				 }
 			 }
 			 
 			 //sort alphabetically
-			 if(!currentSort.equals(prevSort) && currentSort.equals("A")) {
-				 Collections.sort(dataList, new nameComparator());
-			
-			 } else if(currentSort.equals("p") || currentSort.equals("P")) {
-				//else sort by popularity
-				 Collections.sort(dataList, new popComparator());
-				 
-				 //if sorting low to high, use a stack to reverse the order
-				 if(currentSort.equals("p")) {
-					 sortingStack.clear();
-					 //push BabyNames onto stack
-					 for(int i = 0; i < dataList.size(); i++) {
-						 sortingStack.push(dataList.get(i));
+			 if(!currentSort.equals(prevSort)){
+				 if(currentSort.equals("A")) {
+					 Collections.sort(dataList, new nameComparator());
+				
+				 } else {
+					//else sort by popularity
+					 if(currentSort.equals("P") || ( (prevSort.equals("A") || prevSort.equals("")) && currentSort.equals("p") )) {
+						 Collections.sort(dataList, new popComparator());
 					 }
-					 //add to list the name string of the popped off BabyName object
-					 for(int i = 0; i < sortingStack.size(); i++) {
+					 
+					 //if sorting low to high, use a stack to reverse the order
+					 if(currentSort.equals("p")) {
+						 sortingStack.clear();
+						 //push BabyNames onto stack
+						 System.out.println("dataList " + dataList.size());
+						 for(int i = 0; i < dataList.size(); i++) {
+							 sortingStack.push(dataList.get(i));
+						 }
+						 //add to list the name string of the popped off BabyName object
 						 dataList.clear();
-						 dataList.add(sortingStack.pop());
+						 System.out.println("stack " + sortingStack.size());
+						 while(!sortingStack.isEmpty()) {
+							 dataList.add(sortingStack.pop());
+						 }
+						 
+//						 for(int i = 0; i < dataList.size(); i++) {
+//							 System.out.println(dataList.get(i).getPopTotal());
+//						 }
 					 }
 				 }
 			 }
@@ -162,7 +172,8 @@ public class Dataset {
 			 int n;
 			 if(currentNumSuggest == 0) n = dataList.size(); //add all
 			 else n = currentNumSuggest;
-			 
+			 System.out.println("num to show " + n);
+			 System.out.println("dataList " + dataList.size());
 			 //add names to list!
 			 for(int i = 0; i < n; i++) {
 				 BabyName b = dataList.get(i);

@@ -25,28 +25,22 @@ public class View extends JPanel implements Observer {
 	}
 	
 	public void init() {
-		listModel = new DefaultListModel();
-		for (int i = 0; i < model.getDataList().size(); i++) {
-			listModel.addElement(model.getDataList().get(i).getName());
-		}
-		namesList = new JList(listModel);
-		namesList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		namesList.setLayoutOrientation(JList.VERTICAL);
-		namesList.setVisibleRowCount(10);
-		listScroller = new JScrollPane(namesList);
-		listScroller.setPreferredSize(new Dimension(150, 400));
-		add(listScroller);
+		model.getFilterFrame(0).changeVisibility(true);
 	}
 	
 
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < listModel.size(); i++) {
-			listModel.remove(i);
-		}
-		for (int j = 0; j < model.getUserList().size(); j++) {
-			listModel.addElement(model.getUserList().get(j));
+		model.getFilterFrame(0).changeVisibility(false);
+		
+		String newFrameType = model.getFrameType();
+		int newUser = model.getUser();
+		
+		if (newFrameType.equals("filter")) {
+			model.getFilterFrame(newUser).changeVisibility(true);
+		} else if (newFrameType.equals("ranking")) {
+			model.getRankingFrame(newUser).changeVisibility(true);
 		}
 	}
 

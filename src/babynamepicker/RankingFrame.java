@@ -17,7 +17,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class RankingFrame {
+public class RankingFrame extends JPanel {
 
 	private JFrame frame;
 	private JPanel leftPanel;
@@ -36,9 +36,11 @@ public class RankingFrame {
 	
 	
 	public RankingFrame() {
-		frame = new JFrame("Let's Rank Your List!");
-		frame.setLayout(new GridBagLayout()); 
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame = new JFrame("Let's Rank Your List!");
+//		frame.setLayout(new GridBagLayout()); 
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		this.setLayout(new GridBagLayout());
 		
 		leftPanel = new JPanel(new GridBagLayout());
 		rightPanel = new JPanel(new BorderLayout());
@@ -46,11 +48,12 @@ public class RankingFrame {
 		currentName = new JTextArea("Rate This Name!");
 		ratingLegend = new JTextArea("1 - Hate, 5 - Love");
 		leftPanel.add(currentName);
-		frame.add(leftPanel);
+		this.add(leftPanel);
+//		frame.add(leftPanel);
 		
-		frame.pack();
-		frame.setSize(700, 700);
-		frame.setVisible(false);
+//		frame.pack();
+//		frame.setSize(700, 700);
+//		frame.setVisible(false);
 	}
 	
 	public void changeVisibility(boolean toVisible) {

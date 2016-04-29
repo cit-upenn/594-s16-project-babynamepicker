@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 
-public class FilterFrame {
+public class FilterFrame extends JPanel {
 
 	private JFrame frame;
 	
@@ -63,10 +63,11 @@ public class FilterFrame {
 	private FileReader fr;
 	
 	public FilterFrame() {
-		frame = new JFrame("Welcome to Baby Name Picker!");
-		frame.setLayout(new GridBagLayout()); 
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame = new JFrame("Welcome to Baby Name Picker!");
+//		frame.setLayout(new GridBagLayout()); 
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		this.setLayout(new GridBagLayout());
 //		contentPanel = new JPanel(new GridBagLayout());
 		
 		leftPanel = new JPanel(new GridBagLayout());
@@ -169,24 +170,26 @@ public class FilterFrame {
 		leftPanel.add(readyToRankButton, c);
 		c.gridx = 0;
 		c.gridy = 1;
-		frame.add(leftPanel, c);
+//		frame.add(leftPanel, c);
 //		contentPanel.add(leftPanel, c);
+		this.add(leftPanel, c);
 		rightPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		c.gridx = 3;
 		c.gridy = 1;
 		c.weightx = 0.9;
 		c.anchor = GridBagConstraints.CENTER;
-		frame.add(rightPanel, c);
+//		frame.add(rightPanel, c);
 		rightPanel.add(listScroller, BorderLayout.CENTER);
 //		contentPanel.add(rightPanel, c);
+		this.add(rightPanel, c);
 		
 		attachListenersToComponents();
 		
-		frame.pack();
-		frame.setSize(700, 700);
-		frame.setVisible(true);
-//		contentPanel.setSize(700, 700);
-//		contentPanel.setVisible(true);
+//		frame.pack();
+//		frame.setSize(700, 700);
+//		frame.setVisible(true);
+		contentPanel.setSize(700, 700);
+		contentPanel.setVisible(true);
 		
 		
 	}

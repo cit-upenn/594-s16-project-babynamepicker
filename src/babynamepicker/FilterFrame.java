@@ -4,6 +4,12 @@
  */
 package babynamepicker;
 
+/**
+ * This class represents the JFrame that displays all possible baby names
+ * and options to filter the list according to selected crteria.
+ */
+
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -26,8 +32,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
-
-
 
 public class FilterFrame extends JPanel {
 
@@ -64,14 +68,7 @@ public class FilterFrame extends JPanel {
 	private ArrayList<String> secondTestNames = new ArrayList<String>();
 	private FileReader fr;
 	
-	public FilterFrame() {
-
-		frame = new JFrame("one night ultimate baby");
-		frame.setLayout(new GridBagLayout()); 
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-//		this.setLayout(new GridBagLayout());
-
+	public FilterFrame () {
 //		frame = new JFrame("Welcome to Baby Name Picker!");
 //		frame.setLayout(new GridBagLayout()); 
 //		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -110,20 +107,7 @@ public class FilterFrame extends JPanel {
 		numSuggestions = new String[] {"10", "20", "30","40", "50"};
 		numSuggestionsMenu = new JComboBox<String>(numSuggestions);
 		
-
-		String[] test = new String[] {"Harry", "Hermione", "Ron", "Snape", "Dumbledore", "Remus", "Fred", "George"};
-		for (int i = 0; i < test.length; i++) {
-			secondTestNames.add(test[i]);
-		}
-		
-		fr = new FileReader("names/", 1879); //***
-
-//		String[] test = new String[] {"Harry", "Hermione", "Ron", "Snape", "Dumbledore", "Remus", "Fred", "George"};
-//		for (int i = 0; i < test.length; i++) {
-//			secondTestNames.add(test[i]);
-//		}
-		
-		fr = new FileReader("names/", 1888);
+		fr = new FileReader("names/", 1879);
 		dataset = fr.parseData();
 		listModel = new DefaultListModel();
 		for (int i = 0; i < dataset.getDataList().size(); i++) {
@@ -187,35 +171,14 @@ public class FilterFrame extends JPanel {
 		leftPanel.add(readyToRankButton, c);
 		c.gridx = 0;
 		c.gridy = 1;
-
-		frame.add(leftPanel, c);
-//		contentPanel.add(leftPanel, c);
-//		this.add(leftPanel, c);
-
 //		frame.add(leftPanel, c);
 //		contentPanel.add(leftPanel, c);
 		this.add(leftPanel, c);
-
 		rightPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		c.gridx = 3;
 		c.gridy = 1;
 		c.weightx = 0.9;
 		c.anchor = GridBagConstraints.CENTER;
-
-		frame.add(rightPanel, c);
-		rightPanel.add(listScroller, BorderLayout.CENTER);
-//		contentPanel.add(rightPanel, c);
-//		this.add(rightPanel, c);
-		
-		attachListenersToComponents();
-		
-		frame.pack();
-		frame.setSize(700, 700);
-		frame.setVisible(true);
-//		contentPanel.setSize(700, 700);
-//		contentPanel.setVisible(true);
-		
-
 //		frame.add(rightPanel, c);
 		rightPanel.add(listScroller, BorderLayout.CENTER);
 //		contentPanel.add(rightPanel, c);
@@ -243,15 +206,6 @@ public class FilterFrame extends JPanel {
 	
 	public JButton getReadyToRankButton() {
 		return readyToRankButton;
-	}
-	
-	private void updateDisplayedList() {
-		for (int i = 0; i < listModel.size(); i++) {
-			listModel.remove(i);
-		}
-		for (int j = 0; j < dataset.getFilteredList().size(); j++) {
-			listModel.addElement(dataset.getFilteredList().get(j));
-		}
 	}
 	
 	private void attachListenersToComponents() {
@@ -320,9 +274,7 @@ public class FilterFrame extends JPanel {
 				// TODO Auto-generated method stub
 				listModel.removeAllElements();
 				alphaButton.setEnabled(true);
-
 				dataset.setCurrentSort("P");
-				dataset.setCurrentGender("P");
 				dataset.filterList();
 				for (int j = 0; j < dataset.getFilteredList().size(); j++) {
 					listModel.addElement(dataset.getFilteredList().get(j));
@@ -379,36 +331,13 @@ public class FilterFrame extends JPanel {
 				JComboBox c = (JComboBox) e.getSource();
 				String selectedItem = (String) c.getSelectedItem();
 				int numSuggestions = Integer.parseInt(selectedItem);
-				System.out.println("filter " + numSuggestions);
-				System.out.println(numSuggestions);
+				System.out.println("filter" + numSuggestions);
 				dataset.setCurrentNumSuggest(numSuggestions);
 				dataset.filterList();
 				for (int j = 0; j < dataset.getFilteredList().size(); j++) {
 					listModel.addElement(dataset.getFilteredList().get(j));
 				}
 				
-//				switch(numSuggestions) {
-//				case 10:
-//					System.out.println("10 users selected.");
-//					
-//					break;
-//				case 20:
-//					System.out.println("20 users selected.");
-////					model.getNumSuggestedList(20);
-//					break;
-//				case 30:
-//					System.out.println("30 users selected.");
-////					model.getNumSuggestedList(30);
-//					break;
-//				case 40:
-//					System.out.println("40 users selected.");
-////					model.getNumSuggestedList(40);
-//					break;
-//				case 50:
-//					System.out.println("50 users selected.");
-////					model.getNumSuggestedList(50);
-//					break;
-//				}
 				alphaButton.setEnabled(true);
 				
 				
@@ -424,7 +353,7 @@ public class FilterFrame extends JPanel {
 				System.out.println("List will be ordered alphabetically.");
 				dataset.setCurrentSort("A");
 				dataset.filterList();
-				Collections.sort(secondTestNames);
+				Collections.sort(dataset.getFilteredList());
 				alphaButton.setEnabled(false);
 				popularityGroup.clearSelection();
 				for (int j = 0; j < dataset.getFilteredList().size(); j++) {
@@ -448,9 +377,10 @@ public class FilterFrame extends JPanel {
     
 	}
 	
-	public static void main(String[] args) {
-		FilterFrame f = new FilterFrame();
-	}
+//	public static void main(String[] args) {
+//		FilterFrame f = new FilterFrame();
+//	}
 	
 
 }
+

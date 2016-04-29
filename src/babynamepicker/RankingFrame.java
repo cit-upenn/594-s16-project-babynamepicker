@@ -4,6 +4,12 @@
  */
 package babynamepicker;
 
+/**
+ * This class represents the JFrame that displays the parent's filtered list
+ * and allows the parent to rank each name on the displayed list.
+ */
+
+
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 
@@ -54,7 +60,6 @@ public class RankingFrame extends JPanel {
 //		frame.pack();
 //		frame.setSize(700, 700);
 //		frame.setVisible(false);
-
 		this.setSize(700, 700);	
 		this.setVisible(false);
 	}

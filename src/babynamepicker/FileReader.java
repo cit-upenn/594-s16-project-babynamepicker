@@ -48,7 +48,7 @@ public class FileReader {
 							int pop = Integer.parseInt(split[2]);
 							
 							data.addName(babyname, sex, initial, year, pop);
-							
+//							if(babyname.equals("Mary")) System.out.println(year);
 						}
 						year++;
 					} catch (FileNotFoundException e) {
@@ -56,8 +56,9 @@ public class FileReader {
 					}
 			        
 			    }
-			    in.close(); //***
 			});
+			in.close();
+			data.finalList();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

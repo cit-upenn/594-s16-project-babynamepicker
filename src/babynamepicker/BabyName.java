@@ -1,6 +1,5 @@
 package babynamepicker;
 
-import java.util.Comparator;
 import java.util.HashMap;
 
 
@@ -62,6 +61,14 @@ public class BabyName {
 	}
 	
 	/**
+	 * set sex of baby
+	 * @param _sex
+	 */
+	public void setSex(String _sex) {
+		sex = _sex;
+	}
+	
+	/**
 	 * add popularity of the name and its year to the popularity HashMap
 	 * @param year
 	 * @param pop
@@ -70,11 +77,16 @@ public class BabyName {
 		popularity.put(year, pop);
 	}
 	
+	public boolean containsYear(int year) {
+		return popularity.containsKey(year);
+	}
+	
 	/**
 	 * sum up total popularity in the last n years
 	 * @param n
 	 */
 	public void setPopTotal(int n) {
+		popTotal = 0; //***
 		for(int i = 2014; i > 2014 - n; i--) {
 			popTotal += popularity.get(i);
 		}
@@ -117,42 +129,6 @@ public class BabyName {
 		return finalrating;
 	}
 	
-	/**
-	 * sort names by rating
-	 */
-	public static Comparator<BabyName> ratingComparator() {
-		return new Comparator<BabyName>() {
-			
-			@Override
-			public int compare(BabyName o1, BabyName o2) {
-				double comp = 0;
-				comp = o2.getFinalRating() - o1.getFinalRating();
-				comp = o2.getPopTotal() - o1.getPopTotal();
-				
-		        if(comp > 0) return 1;
-		        else if(comp < 0) return -1;
-		        else return 0;
-			}	
-		};
-	}
-	
-	/**
-	 * sort names by popularity
-	 */
-	public static Comparator<BabyName> popComparator() {
-		return new Comparator<BabyName>() {
-			
-			@Override
-			public int compare(BabyName o1, BabyName o2) {
-				double comp = 0;
-				comp = o2.getPopTotal() - o1.getPopTotal();
-				
-		        if(comp > 0) return 1;
-		        else if(comp < 0) return -1;
-		        else return 0;
-			}	
-		};
-	}
 	
 	/**
 	 * To check if two items are equal by ID
@@ -178,4 +154,6 @@ public class BabyName {
 	 public int hashCode() {
 		 return this.getName().hashCode();
 	 }
+	 
+	
 }

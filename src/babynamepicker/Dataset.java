@@ -99,9 +99,13 @@ public class Dataset {
 	public void finalList() {
 		for(String i : dataMap.keySet()) {
 			for(int j = 1880; j < 2015; j++) {
+<<<<<<< HEAD
 				if(!dataMap.get(i).containsYear(j)) {
 					dataMap.get(i).addPop(j, 0);
 				}
+=======
+				if(!dataMap.get(i).containsYear(j)) dataMap.get(i).addPop(j, 0);
+>>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 			}
 			dataList.add(dataMap.get(i));
 		}
@@ -138,6 +142,7 @@ public class Dataset {
 			 }
 			 
 			 //sort alphabetically
+<<<<<<< HEAD
 			 if(!currentSort.equals(prevSort) || currentNYears != prevNYears){ //***
 				 if(currentSort.equals("A")) {
 					 Collections.sort(dataList, new nameComparator());
@@ -146,6 +151,15 @@ public class Dataset {
 					//else sort by popularity
 					 //***
 					 if(currentNYears != prevNYears || currentSort.equals("P") || ( (prevSort.equals("A") || prevSort.equals("")) && currentSort.equals("p") )) {
+=======
+			 if(!currentSort.equals(prevSort)){
+				 if(currentSort.equals("A")) {
+					 Collections.sort(dataList, new nameComparator());
+				
+				 } else {
+					//else sort by popularity
+					 if(currentSort.equals("P") || ( (prevSort.equals("A") || prevSort.equals("")) && currentSort.equals("p") )) {
+>>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 						 Collections.sort(dataList, new popComparator());
 					 }
 					 
@@ -153,11 +167,16 @@ public class Dataset {
 					 if(currentSort.equals("p")) {
 						 sortingStack.clear();
 						 //push BabyNames onto stack
+<<<<<<< HEAD
+=======
+						 System.out.println("dataList " + dataList.size());
+>>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 						 for(int i = 0; i < dataList.size(); i++) {
 							 sortingStack.push(dataList.get(i));
 						 }
 						 //add to list the name string of the popped off BabyName object
 						 dataList.clear();
+<<<<<<< HEAD
 						 while(!sortingStack.isEmpty()) {
 							 dataList.add(sortingStack.pop());
 						 }
@@ -197,6 +216,44 @@ public class Dataset {
 				 else j = filteredList.size();
 			 }
 			 System.out.println("filteredList " + filteredList.size());
+=======
+						 System.out.println("stack " + sortingStack.size());
+						 while(!sortingStack.isEmpty()) {
+							 dataList.add(sortingStack.pop());
+						 }
+						 
+//						 for(int i = 0; i < dataList.size(); i++) {
+//							 System.out.println(dataList.get(i).getPopTotal());
+//						 }
+					 }
+				 }
+			 }
+			 
+			 //set how many to add to the list
+			 int n;
+			 if(currentNumSuggest == 0) n = dataList.size(); //add all
+			 else n = currentNumSuggest;
+			 System.out.println("num to show " + n);
+			 System.out.println("dataList " + dataList.size());
+			 //add names to list!
+			 for(int i = 0; i < n; i++) {
+				 BabyName b = dataList.get(i);
+				 
+				 //add only names of the specified gender (and unisex names, since they apply to either male/female)
+				 if (b.getSex().equals(currentGender) || b.getSex().equals("U")) {
+					 //if a certain initial is preferred
+					 if(currentInitial != '0') {
+						 if(b.getInitial() == currentInitial) { //add only names of that initial
+							 String s = b.getName() + " (" + b.getPopTotal() + ")";
+							 filteredList.add(s);
+						 }
+					 } else {
+						 String s = b.getName() + " (" + b.getPopTotal() + ")";
+						 filteredList.add(s); 
+					 }
+				 } 
+			 }
+>>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 			 
 			 //store these filters to compare with the next batch
 			 prevGender = currentGender;
@@ -257,6 +314,18 @@ public class Dataset {
 		return filteredList;
 	}
 
+<<<<<<< HEAD
+=======
+
+	/**
+	 * @return the currentInitial
+	 */
+	public char getCurrentInitial() {
+		return currentInitial;
+	}
+
+
+>>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 	/**
 	 * @param currentInitial the currentInitial to set
 	 */
@@ -264,6 +333,18 @@ public class Dataset {
 		this.currentInitial = currentInitial;
 	}
 
+<<<<<<< HEAD
+=======
+
+	/**
+	 * @return the currentGender
+	 */
+	public String getCurrentGender() {
+		return currentGender;
+	}
+
+
+>>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 	/**
 	 * @param currentGender the currentGender to set
 	 */
@@ -271,6 +352,18 @@ public class Dataset {
 		this.currentGender = currentGender;
 	}
 
+<<<<<<< HEAD
+=======
+
+	/**
+	 * @return the currentSort
+	 */
+	public String getCurrentSort() {
+		return currentSort;
+	}
+
+
+>>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 	/**
 	 * @param currentSort the currentSort to set
 	 */
@@ -278,6 +371,18 @@ public class Dataset {
 		this.currentSort = currentSort;
 	}
 
+<<<<<<< HEAD
+=======
+
+	/**
+	 * @return the currentNYears
+	 */
+	public int getCurrentNYears() {
+		return currentNYears;
+	}
+
+
+>>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 	/**
 	 * @param currentNYears the currentNYears to set
 	 */
@@ -285,6 +390,18 @@ public class Dataset {
 		this.currentNYears = currentNYears;
 	}
 
+<<<<<<< HEAD
+=======
+
+	/**
+	 * @return the currentNumSuggest
+	 */
+	public int getCurrentNumSuggest() {
+		return currentNumSuggest;
+	}
+
+
+>>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 	/**
 	 * @param currentNumSuggest the currentNumSuggest to set
 	 */

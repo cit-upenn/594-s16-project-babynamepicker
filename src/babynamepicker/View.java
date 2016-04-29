@@ -25,13 +25,18 @@ public class View extends JPanel implements Observer {
 	}
 	
 	public void init() {
+<<<<<<< HEAD
 		model.getFilterFrame(0).changeVisibility(true);
+=======
+//		model.setCurrentDisplay(0);
+>>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 	}
 	
 
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
+<<<<<<< HEAD
 		model.getFilterFrame(0).changeVisibility(false);
 		
 		String newFrameType = model.getFrameType();
@@ -41,6 +46,15 @@ public class View extends JPanel implements Observer {
 			model.getFilterFrame(newUser).changeVisibility(true);
 		} else if (newFrameType.equals("ranking")) {
 			model.getRankingFrame(newUser).changeVisibility(true);
+=======
+		int updated = model.getCurrentDisplay();
+		for (int i = 0; i < model.getAllPanels().length; i++) {
+			if (i == updated) {
+				model.getAllPanels()[i].setVisible(true);
+			} else {
+				model.getAllPanels()[i].setVisible(false);
+			}
+>>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 		}
 	}
 

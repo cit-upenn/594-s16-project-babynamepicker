@@ -129,6 +129,46 @@ public class BabyName {
 		return finalrating;
 	}
 	
+<<<<<<< HEAD
+=======
+//	/**
+//	 * sort names by rating
+//	 */
+//	public static Comparator<BabyName> ratingComparator() {
+//		return new Comparator<BabyName>() {
+//			
+//			@Override
+//			public int compare(BabyName o1, BabyName o2) {
+//				double comp = 0;
+//				comp = o2.getFinalRating() - o1.getFinalRating();
+//				comp = o2.getPopTotal() - o1.getPopTotal();
+//				
+//		        if(comp > 0) return 1;
+//		        else if(comp < 0) return -1;
+//		        else return 0;
+//			}	
+//		};
+//	}
+//	
+//	/**
+//	 * sort names by popularity
+//	 */
+//	public static Comparator<BabyName> popComparator() {
+//		return new Comparator<BabyName>() {
+//			
+//			@Override
+//			public int compare(BabyName o1, BabyName o2) {
+//				double comp = 0;
+//				comp = o2.getPopTotal() - o1.getPopTotal();
+//				
+//		        if(comp > 0) return 1;
+//		        else if(comp < 0) return -1;
+//		        else return 0;
+//			}	
+//		};
+//	}
+//	
+>>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 	
 	/**
 	 * To check if two items are equal by ID

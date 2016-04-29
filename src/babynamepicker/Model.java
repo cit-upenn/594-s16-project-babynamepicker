@@ -3,10 +3,13 @@ package babynamepicker;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Observable;
+
+import javax.swing.JPanel;
 //import java.util.PriorityQueue;
 
 
 public class Model extends Observable {
+<<<<<<< HEAD
 	private FilterFrame[] filterFrames;
 	private RankingFrame[] rankingFrames;
 	private String frameType;
@@ -73,6 +76,59 @@ public class Model extends Observable {
 		notifyObservers();
 	}
 	
+=======
+//	private FilterFrame[] filterFrames;
+//	private RankingFrame[] rankingFrames;
+//	private String frameType;
+//	private int user;
+	
+	private JPanel[] allPanels;
+	private int currentDisplayPanel;
+	
+	private FileReader fr;
+	private Dataset d;
+	private ArrayList<String> userList;
+	
+	public Model() {
+//		fr = new FileReader("names/", 1888);
+//		d = fr.parseData();
+//		userList = new ArrayList<String>();
+		
+//		allPanels = new JPanel[5];
+		allPanels = new JPanel[2];
+		System.out.println("Make allPanels into array of JPanels.");
+		initializePanels();
+		System.out.println("Initailized all Panels.");
+		currentDisplayPanel = 0;
+	}
+	
+	public void initializePanels() {
+		allPanels[0] = new FilterFrame();
+		allPanels[1] = new RankingFrame();
+//		allPanels[2] = new RankingFrame();
+//		allPanels[3] = new RankingFrame();
+//		allPanels[4] = new RankingFrame(); //Should be Final Frame
+	}
+	
+	public JPanel[] getAllPanels() {
+		return allPanels;
+	}
+	
+	public JPanel getPanel(int index) {
+		return allPanels[index];
+	}
+	
+	public void setCurrentDisplay(int panel) {
+		this.currentDisplayPanel = panel;
+		setChanged();
+		notifyObservers();
+	}
+	
+	public int getCurrentDisplay() {
+		return currentDisplayPanel;
+	}
+	
+>>>>>>> f8ff3862136ec46f22cec9b40512513754cf5b62
 	/**
 	 * @return dataList
 	 */
@@ -119,7 +175,7 @@ public class Model extends Observable {
 				list.add(i);
 			}
 		}
-		Collections.sort(list, BabyName.ratingComparator());
+//		Collections.sort(list, BabyName.ratingComparator());
 		BabyName[] array = list.toArray(new BabyName[0]);
 		return array;
 	}

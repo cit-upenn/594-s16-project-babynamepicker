@@ -87,6 +87,7 @@ public class Dataset {
 		}
 		//add year and popularity to the BabyName's popularity HashMap
 		dataMap.get(name).addPop(year, pop);
+		if(name.equals("Dick")) System.out.println(year + ", " + pop);
 	}
 	
 	

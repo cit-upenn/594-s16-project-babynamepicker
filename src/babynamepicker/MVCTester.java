@@ -30,7 +30,7 @@ public class MVCTester {
 	 * @param inputData
 	 */
 	private void create(Dataset inputData) {
-        JFrame f = new JFrame("BabyName Picker");
+        JFrame f = new JFrame("ONE NIGHT ULTIMATE BABY: BABY NAME PICKER EXTREME");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.add(new MainPanel(inputData));
         f.pack();

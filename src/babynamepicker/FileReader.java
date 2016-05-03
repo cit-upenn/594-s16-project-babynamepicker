@@ -48,10 +48,10 @@ public class FileReader {
 						while(in.hasNextLine()) {
 							String s = in.nextLine();
 							String[] split = s.split(delimiter);
-							String babyname = split[0];
-							char initial = babyname.charAt(0);
-							String sex = split[1];
-							int pop = Integer.parseInt(split[2]);
+							String babyname = split[0]; //the name
+							char initial = babyname.charAt(0); //the first character of the name, i.e. the initial
+							String sex = split[1]; //gender, M or F
+							int pop = Integer.parseInt(split[2]); //popularity (number of occurrences in that year)
 							
 							data.addName(babyname, sex, initial, year, pop);
 						}

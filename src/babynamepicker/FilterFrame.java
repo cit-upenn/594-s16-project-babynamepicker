@@ -80,7 +80,7 @@ public class FilterFrame extends JPanel {
 		//Initialize texts
 		genderText = new JTextArea("Gender of the Baby: ");
 		genderText.setFont(new Font("Chalkboard", Font.PLAIN, 15));
-		popularText = new JTextArea("Sort by Commonality: ");
+		popularText = new JTextArea("Sort by popularity: ");
 		popularText.setFont(new Font("Chalkboard", Font.PLAIN, 15));
 		startsWithText = new JTextArea("Starts with letter: ");
 		startsWithText.setFont(new Font("Chalkboard", Font.PLAIN, 15));
@@ -100,9 +100,9 @@ public class FilterFrame extends JPanel {
 		maleOrFemaleGroup.add(maleButton);
 		maleOrFemaleGroup.add(femaleButton);
 		maleOrFemaleGroup.add(unisexButton);
-		leastPopularButton = new JRadioButton("Least to Most");
+		leastPopularButton = new JRadioButton("Low to High");
 		leastPopularButton.setFont(new Font("Chalkboard", Font.PLAIN, 15));
-		mostPopularButton = new JRadioButton("Most to Least");
+		mostPopularButton = new JRadioButton("High to Low");
 		mostPopularButton.setFont(new Font("Chalkboard", Font.PLAIN, 15));
 		alphaButton = new JButton("Return to Alphabetical Ordering");
 		alphaButton.setFont(new Font("Chalkboard", Font.PLAIN, 15));

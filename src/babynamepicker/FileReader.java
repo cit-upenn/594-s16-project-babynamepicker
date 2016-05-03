@@ -1,5 +1,6 @@
 package babynamepicker;
 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -7,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
 /**
- * 
+ * This class reads in files and creates Dataset.
  * @author victoriayi
  *
  */
@@ -20,6 +21,11 @@ public class FileReader {
 	private Scanner in;
 	private int year;
 	
+	/**
+	* constructor
+	* @param _path, the path of files
+	* @param _year, the starting year
+	*/
 	public FileReader(String _path, int _year) {
 		path = _path;
 		data = new Dataset();
@@ -48,9 +54,8 @@ public class FileReader {
 							int pop = Integer.parseInt(split[2]);
 							
 							data.addName(babyname, sex, initial, year, pop);
-//							if(babyname.equals("Mary")) System.out.println(year);
 						}
-						year++;
+						year++; //increment the year for the next file
 					} catch (FileNotFoundException e) {
 						e.printStackTrace();
 					}
@@ -58,7 +63,6 @@ public class FileReader {
 			    }
 			});
 			in.close();
-			data.finalList();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

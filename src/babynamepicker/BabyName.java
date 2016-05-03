@@ -1,10 +1,11 @@
 package babynamepicker;
 
+
 import java.util.HashMap;
 
 
 /**
- * 
+ * Defines the BabyName object and its attributes.
  * @author victoriayi
  *
  */
@@ -16,8 +17,8 @@ public class BabyName {
 	private String sex;
 	private char initial;
 	private HashMap<Integer, Integer> popularity;
-	private int popTotal;
-	private int rating1, rating2;
+	private int popTotal; //total number of occurences of this name in the last n years given
+	private int rating1, rating2; //rating from user1 and user2, respectively
 	private float finalrating;
 	
 	/**
@@ -42,6 +43,13 @@ public class BabyName {
 	 */
 	public String getName() {
 		return name;
+	}
+	
+	/**
+	 * Concatenates the name of the baby with its final rating 
+	 */
+	public void getRankedName() {
+		name = name.concat(" (" + Float.toString(finalrating) + ")");
 	}
 	
 	/**
@@ -77,6 +85,11 @@ public class BabyName {
 		popularity.put(year, pop);
 	}
 	
+	/**
+	* check if popularity value has been assigned for the given year
+	* @param year
+	* @return popularity.containsKey(year)
+	*/
 	public boolean containsYear(int year) {
 		return popularity.containsKey(year);
 	}
@@ -92,10 +105,19 @@ public class BabyName {
 		}
 	}
 	
+	/**
+	* get total popularity
+	* @return popTotal
+	*/
 	public int getPopTotal() {
 		return popTotal;
 	}
 	
+	/**
+	* set rating1 or rating2
+	* @param user-- if 1 set rating1, else(if 2) set rating2
+	* @param rating
+	*/
 	public void setRating(int user, int rating) {
 		if(user == 1) {
 			rating1 = rating;
@@ -104,9 +126,9 @@ public class BabyName {
 	}
 	
 	/**
-	 * 
+	 * get rating1 or rating2
 	 * @param user
-	 * @return
+	 * @return the ratiing value
 	 */
 	public int getRating(int user) {
 		if(user == 1) return rating1;
@@ -118,13 +140,23 @@ public class BabyName {
 	 * @return average rating
 	 */
 	public float getAvgRating() {
-		return (rating1 + rating2) / 2;
+		return (float) (rating1 + rating2) / 2;
 	}
 	
+	/**
+	* set the final rating of this name
+	* if both users rated this name, finalRating would be the average;
+	* if not, the rating from just one user
+	* @param _rating
+	*/
 	public void setFinalRating(float _rating) {
 		finalrating = _rating;
 	}
 	
+	/**
+	* get the final rating of this name
+	* @return finalrating
+	*/
 	public float getFinalRating() {
 		return finalrating;
 	}

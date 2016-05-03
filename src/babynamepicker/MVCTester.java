@@ -1,4 +1,8 @@
+/**
+ * This class has the main method that runs the program.
+ */
 package babynamepicker;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -13,16 +17,22 @@ public class MVCTester {
         SwingUtilities.invokeLater(new Runnable() {
             //@Override
             public void run() {
-                new MVCTester().create();
+            	FileReader fr = new FileReader("names/", 1879);
+            	Dataset data = fr.parseData();
+                new MVCTester().create(data);
             }
         });
         
     }
 	
-	private void create() {
-        JFrame f = new JFrame("One Night Ultimate Baby");
+	/**
+	 * Creates & makes settings for the JFrame for the program
+	 * @param inputData
+	 */
+	private void create(Dataset inputData) {
+        JFrame f = new JFrame("BabyName Picker");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.add(new MainPanel());
+        f.add(new MainPanel(inputData));
         f.pack();
         f.setLocationRelativeTo(null);
         f.setVisible(true);

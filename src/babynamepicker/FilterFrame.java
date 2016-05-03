@@ -1,11 +1,6 @@
-/**
- * This class represents the JFrame that displays all possible baby names
- * and options to filter the list according to selected crteria.
- */
 package babynamepicker;
-
 /**
- * This class represents the JFrame that displays all possible baby names
+ * This class represents the JPanel that displays all possible baby names
  * and options to filter the list according to selected crteria.
  */
 
@@ -13,12 +8,14 @@ package babynamepicker;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -35,9 +32,8 @@ import javax.swing.ListSelectionModel;
 
 public class FilterFrame extends JPanel {
 
-	private JFrame frame;
-	
-	private JPanel contentPanel;
+//	private JFrame frame;	
+//	private JPanel contentPanel;
 	
 	private JPanel leftPanel;
 	private JPanel rightPanel;
@@ -65,61 +61,86 @@ public class FilterFrame extends JPanel {
 	private JScrollPane listScroller;
 	private DefaultListModel listModel;
 	private Dataset dataset;
-	private ArrayList<String> secondTestNames = new ArrayList<String>();
-	private FileReader fr;
 	
-	public FilterFrame () {
-//		frame = new JFrame("Welcome to Baby Name Picker!");
-//		frame.setLayout(new GridBagLayout()); 
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	/**
+	 * Constructor for class
+	 * @param inputData baby name dataset
+	 */
+	public FilterFrame (Dataset inputData) {		
+		dataset = inputData;
 		
 		this.setLayout(new GridBagLayout());
-//		contentPanel = new JPanel(new GridBagLayout());
+		this.setBackground(Color.WHITE);
 		
+		//Initialize panels 
 		leftPanel = new JPanel(new GridBagLayout());
+		leftPanel.setBackground(Color.WHITE);
 		rightPanel = new JPanel(new BorderLayout());
 		
+		//Initialize texts
 		genderText = new JTextArea("Gender of the Baby: ");
+		genderText.setFont(new Font("Chalkboard", Font.PLAIN, 15));
 		popularText = new JTextArea("Sort by Commonality: ");
+		popularText.setFont(new Font("Chalkboard", Font.PLAIN, 15));
 		startsWithText = new JTextArea("Starts with letter: ");
+		startsWithText.setFont(new Font("Chalkboard", Font.PLAIN, 15));
 		popularWithinText = new JTextArea("Popular Within the Last _ Years:");
+		popularWithinText.setFont(new Font("Chalkboard", Font.PLAIN, 15));
 		numSuggestionsText = new JTextArea("Number of Suggestions: ");
+		numSuggestionsText.setFont(new Font("Chalkboard", Font.PLAIN, 15));
 		
+		//Initialize buttons & place in button groups
 		maleButton = new JRadioButton("Male");
+		maleButton.setFont(new Font("Chalkboard", Font.PLAIN, 15));
 		femaleButton = new JRadioButton("Female");
+		femaleButton.setFont(new Font("Chalkboard", Font.PLAIN, 15));
 		unisexButton = new JRadioButton("Both");
+		unisexButton.setFont(new Font("Chalkboard", Font.PLAIN, 15));
 		maleOrFemaleGroup = new ButtonGroup();
 		maleOrFemaleGroup.add(maleButton);
 		maleOrFemaleGroup.add(femaleButton);
 		maleOrFemaleGroup.add(unisexButton);
 		leastPopularButton = new JRadioButton("Least to Most");
+		leastPopularButton.setFont(new Font("Chalkboard", Font.PLAIN, 15));
 		mostPopularButton = new JRadioButton("Most to Least");
+		mostPopularButton.setFont(new Font("Chalkboard", Font.PLAIN, 15));
 		alphaButton = new JButton("Return to Alphabetical Ordering");
+		alphaButton.setFont(new Font("Chalkboard", Font.PLAIN, 15));
 		alphaButton.setEnabled(false);
 		popularityGroup = new ButtonGroup();
 		popularityGroup.add(leastPopularButton);
 		popularityGroup.add(mostPopularButton);
-		letters = new String[] {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+		
+		//Initialize Menus
+		letters = new String[] {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z", "No Preference"};
 		startWithMenu = new JComboBox<String>(letters);
+		startWithMenu.setFont(new Font("Chalkboard", Font.PLAIN, 15));
 		popularYears = new String[] {"10", "20", "30", "40", "50", "All Time"};
 		popularWithinMenu = new JComboBox<String>(popularYears);
-		readyToRankButton = new JButton("I'm ready to rank!");
+		popularWithinMenu.setFont(new Font("Chalkboard", Font.PLAIN, 15));
+		readyToRankButton = new JButton("Click to save list!");
+		readyToRankButton.setFont(new Font("Chalkboard", Font.PLAIN, 15));
 		numSuggestions = new String[] {"10", "20", "30","40", "50"};
 		numSuggestionsMenu = new JComboBox<String>(numSuggestions);
+		numSuggestionsMenu.setFont(new Font("Chalkboard", Font.PLAIN, 15));
 		
-		fr = new FileReader("names/", 1879);
-		dataset = fr.parseData();
+		//Initialize & fill list to be displayed on the GUI
 		listModel = new DefaultListModel();
+		dataset.clearList();
+		dataset.finalList();
 		for (int i = 0; i < dataset.getDataList().size(); i++) {
 			listModel.addElement(dataset.getDataList().get(i).getName());
 		}
+		
+		
 		namesList = new JList(listModel);
-//		namesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		namesList.setLayoutOrientation(JList.VERTICAL);
 		namesList.setVisibleRowCount(10);
+		namesList.setFont(new Font("Chalkboard", Font.PLAIN, 13));
 		listScroller = new JScrollPane(namesList);
 		listScroller.setPreferredSize(new Dimension(150, 400));
 		
+		//Place components according to defined GridBagLayout constraints
 		GridBagConstraints c = new GridBagConstraints();
 		int i = 1;
 		c.weightx = 0.1;
@@ -171,43 +192,25 @@ public class FilterFrame extends JPanel {
 		leftPanel.add(readyToRankButton, c);
 		c.gridx = 0;
 		c.gridy = 1;
-//		frame.add(leftPanel, c);
-//		contentPanel.add(leftPanel, c);
 		this.add(leftPanel, c);
 		rightPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		c.gridx = 3;
 		c.gridy = 1;
 		c.weightx = 0.9;
 		c.anchor = GridBagConstraints.CENTER;
-//		frame.add(rightPanel, c);
 		rightPanel.add(listScroller, BorderLayout.CENTER);
-//		contentPanel.add(rightPanel, c);
 		this.add(rightPanel, c);
 		
 		attachListenersToComponents();
-		
-//		frame.pack();
-//		frame.setSize(700, 700);
-//		frame.setVisible(true);
-//		contentPanel.setSize(700, 700);
-//		contentPanel.setVisible(false);
+
 		this.setSize(700, 700);
 		this.setVisible(false);
 		
 	}
 	
-	public void changeVisibility(boolean toVisible) {
-		if (toVisible == true) {
-			contentPanel.setVisible(true);
-		} else if (toVisible == false) {
-			contentPanel.setVisible(false);
-		}
-	}
-	
-	public JButton getReadyToRankButton() {
-		return readyToRankButton;
-	}
-	
+	/**
+	 * Attaches listeners to all components of this planel
+	 */
 	private void attachListenersToComponents() {
 		//The Male button tells the Model to list Male names only
     	maleButton.addActionListener(new ActionListener() {
@@ -238,7 +241,7 @@ public class FilterFrame extends JPanel {
 			}
     		
     	});
-    	//The Unisex button tells the Model to list both male and female names 
+    	//The Unisex button tells the Model to list both male and female names (unisex)
     	unisexButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -288,10 +291,15 @@ public class FilterFrame extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				char letter = 0;
 				listModel.removeAllElements();
 				JComboBox c = (JComboBox) e.getSource();
 				String selectedItem = (String) c.getSelectedItem();
-				char letter = selectedItem.charAt(0);
+				if (selectedItem.equals("No Preference")) {
+					letter = '0';
+				} else {
+					letter = selectedItem.charAt(0);
+				}
 				alphaButton.setEnabled(true);
 				dataset.setCurrentInitial(letter);
 				dataset.filterList();
@@ -363,24 +371,33 @@ public class FilterFrame extends JPanel {
 			}
     		
     	});
-//    	Ready to Rank button tells Model to show next Pane.
+//    	Ready to Rank button tells Model to save this user's filtered list.
     	readyToRankButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-//				System.out.println("Button pressed");
-//				frame.setVisible(false);
+				dataset.clearList();
+				dataset.finalList();
+				dataset.resetFilters();
+				readyToRankButton.setEnabled(false);
 				
+				//Set all other buttons disabled too
+				maleButton.setEnabled(false);
+				femaleButton.setEnabled(false);
+				unisexButton.setEnabled(false);
+				leastPopularButton.setEnabled(false);
+				mostPopularButton.setEnabled(false);
+				alphaButton.setEnabled(false);
+				startWithMenu.setEnabled(false);
+				popularWithinMenu.setEnabled(false);
+				numSuggestionsMenu.setEnabled(false);
+				
+				//Enable Click to Continue button Controller to move onto next panel
+				Controller.clickToContinue.setEnabled(true);
 			}
     		
-    	});
-    
-	}
-	
-//	public static void main(String[] args) {
-//		FilterFrame f = new FilterFrame();
-//	}
-	
+    	});    
+	}	
 
 }
 

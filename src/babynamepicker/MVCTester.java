@@ -17,7 +17,7 @@ public class MVCTester {
         SwingUtilities.invokeLater(new Runnable() {
             //@Override
             public void run() {
-            	FileReader fr = new FileReader("names/", 1879);
+            	FileReader fr = new FileReader("names/", 1880);
             	Dataset data = fr.parseData();
                 new MVCTester().create(data);
             }

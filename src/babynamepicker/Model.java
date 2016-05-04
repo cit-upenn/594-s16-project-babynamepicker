@@ -31,43 +31,16 @@ public class Model extends Observable {
 		filterFramePanels = new FilterFrame[2];
 		rankingFramePanels = new RankingFrame[2];
 		
-		initializeFilterPanels();
-		initializeRankingPanels();
-		initializeStartPanel();
-		initializeFinalPanel();
+		filterFramePanels[0] = new FilterFrame(dataset);
+		filterFramePanels[1] = new FilterFrame(dataset);
+		rankingFramePanels[0] = new RankingFrame();
+		rankingFramePanels[1] = new RankingFrame();
+		startFrame = new StartFrame();
+		finalFrame = new FinalFrame();
 		
 		currentDisplayPanel = 0;
 	}
-	
-	/**
-	 * Initializes the two Filter Panels of this program
-	 */
-	public void initializeFilterPanels() {
-		filterFramePanels[0] = new FilterFrame(dataset);
-		filterFramePanels[1] = new FilterFrame(dataset);
-	}
-	
-	/**
-	 * Initializes the two Ranking Panels of this program
-	 */
-	public void initializeRankingPanels() {
-		rankingFramePanels[0] = new RankingFrame();
-		rankingFramePanels[1] = new RankingFrame();
-	}
-	
-	/**
-	 * Initializes the Start Panel of this program
-	 */
-	public void initializeStartPanel() {
-		startFrame = new StartFrame();
-	}
-	
-	/**
-	 * Initializes the Final Panel of this program
-	 */
-	public void initializeFinalPanel() {
-		finalFrame = new FinalFrame();
-	}
+
 	
 	/**
 	 * Get the specified Ranking Panel

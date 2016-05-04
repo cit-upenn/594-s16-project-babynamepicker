@@ -38,7 +38,7 @@ public class Model extends Observable {
 		startFrame = new StartFrame();
 		finalFrame = new FinalFrame();
 		
-		currentDisplayPanel = 0;
+		currentDisplayPanel = 0; //
 	}
 
 	
